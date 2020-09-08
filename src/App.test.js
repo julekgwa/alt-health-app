@@ -10,9 +10,8 @@ import {
 
 test('renders learn react link', () => {
 
-  const { getByText, } = render(<App />);
-  const linkElement = getByText(/alt health/i);
+  const { queryByText, } = render(<App />);
 
-  expect(linkElement).toBeInTheDocument();
+  expect(queryByText(/landing/i)).toBeTruthy();
 
 });

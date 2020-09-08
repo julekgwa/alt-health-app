@@ -2,7 +2,7 @@
   "name": "alt-health",
   "version": "0.1.0",
   "private": true,
-  "main": "public/electron.js",
+  "main": "src/electron/main.js",
   "description": "alt health supplement system",
   "homepage": "./",
   "dependencies": {
@@ -18,6 +18,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
     "styled-components": "^5.2.0"
   },

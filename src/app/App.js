@@ -2,15 +2,21 @@ import React from 'react';
 
 import './App.css';
 
+import {
+  Navigation
+} from './components/navigation/navigation';
+
+import {
+  GlobalStyle
+} from './styles/globalStyle';
+
 export function App() {
 
   return (
-    <div className='App'>
-
-      <p>
-          ALT HEALTH APP
-      </p>
-    </div>
+    <React.Fragment>
+      <GlobalStyle />
+      <Navigation />
+    </React.Fragment>
   );
 
 }
