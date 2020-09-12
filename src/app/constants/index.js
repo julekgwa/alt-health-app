@@ -1,0 +1,2 @@
+export const IS_DESKTOP_MENU = 'IS_DESKTOP_MENU';
+export const UPDATE_SLIDER_INDEX = 'SLIDER_INDEX';
