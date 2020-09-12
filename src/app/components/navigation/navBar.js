@@ -1,3 +1,7 @@
+import {
+  connect
+} from 'react-redux';
+
 import styled,
 {
   css
@@ -6,6 +10,10 @@ import styled,
 import {
   Colors
 } from 'app/styles/colors';
+
+const mapStateToProps = state => ({
+  active: state.isActive,
+});
 
 const Navigation = styled.nav`
   margin: 0;
@@ -17,7 +25,6 @@ const Navigation = styled.nav`
   a {
     display: block;
     color: white;
-    text-align: center;
     float: left;
     padding: 10px;
     text-decoration: none;
@@ -103,13 +110,6 @@ const Navigation = styled.nav`
         text-align: left;
       }
 
-      .some-div {
-        position: static;
-        display: inline-block;
-        padding: 10px;
-        flex-direction: column;
-      }
-
       .inner {
         display: flex;
         position: static;
@@ -118,6 +118,7 @@ const Navigation = styled.nav`
         padding: 5px 0;
         z-index: 1;
       }
+
     `}
 
   @media screen and (max-width: 480px) {
@@ -151,4 +152,4 @@ const Navigation = styled.nav`
   }
 `;
 
-export const NavBar = Navigation;
+export const NavBar = connect(mapStateToProps)(Navigation);

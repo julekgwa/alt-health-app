@@ -3,8 +3,16 @@ import React from 'react';
 import './App.css';
 
 import {
+  Provider
+} from 'react-redux';
+
+import {
   Navigation
 } from './components/navigation/navigation';
+
+import {
+  store
+} from './redux/store';
 
 import {
   GlobalStyle
@@ -13,10 +21,12 @@ import {
 export function App() {
 
   return (
-    <React.Fragment>
-      <GlobalStyle />
-      <Navigation />
-    </React.Fragment>
+    <Provider store={store}>
+      <React.Fragment>
+        <GlobalStyle />
+        <Navigation />
+      </React.Fragment>
+    </Provider>
   );
 
 }

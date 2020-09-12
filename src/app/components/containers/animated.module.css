@@ -1,0 +1,33 @@
+.animated {
+  border: 1px solid #92909D;
+  margin: 50px auto;
+  padding: 10px;
+  min-height: 350px;
+  background: linear-gradient(#92909D, #3A3742);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.animated::before,
+.animated::after {
+  box-sizing: border-box;
+  position: absolute;
+  content: '';
+  border: 1px solid #92909D;
+  height: 20px;
+}
+
+.animated::before {
+  width: 89%;
+  left: 5.5%;
+  top: -20px;
+  background: linear-gradient(#3A3742, #92909D);
+  z-index: 1;
+}
+
+.animated::after {
+  width: 79%;
+  left: 10.5%;
+  top: -35px;
+  background-color: #92909D;
+}

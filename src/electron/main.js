@@ -1,6 +1,6 @@
 const electron = require('electron');
 
-const { app, } = electron;
+const { app, ipcMain, } = electron;
 const BrowserWindow = electron.BrowserWindow;
 const isDev = require('electron-is-dev');
 
@@ -13,6 +13,11 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680,
+    frame: false,
+    webPreferences: {
+      nodeIntegration: false,
+      preload: __dirname + '/preload.js',
+    },
   });
 
   mainWindow.loadURL(
@@ -41,5 +46,31 @@ app.on('activate', () => {
     createWindow();
 
   }
+
+});
+
+ipcMain.on('window:close', () => {
+
+  app.quit();
+
+});
+
+ipcMain.on('window:max', () => {
+
+  if (!mainWindow.isMaximized()) {
+
+    mainWindow.maximize();
+
+  } else {
+
+    mainWindow.unmaximize();
+
+  }
+
+});
+
+ipcMain.on('window:mix', () => {
+
+  mainWindow.minimize();
 
 });

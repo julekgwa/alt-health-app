@@ -1,18 +1,11 @@
 
-import React,
-{
-  useState
-} from 'react';
+import React from 'react';
 
 import {
   BrowserRouter,
   Route,
   Switch
 } from 'react-router-dom';
-
-import {
-  Home
-} from 'app/components/containers/home';
 
 import {
   NavBar
@@ -22,19 +15,38 @@ import {
   RoutesLinks
 } from 'app/components/navigation/routeLinks';
 
+import {
+  Home
+} from 'app/pages/home';
+
+import {
+  Info
+} from 'app/pages/info';
+
+import {
+  Report
+} from 'app/pages/reports';
+
+import {
+  MenuBar
+} from '../window-buttons/menubar';
+
 export const Navigation = () => {
 
-  const [active, setActive] = useState(false);
-
   return (
-    <BrowserRouter>
-      <NavBar active={active}>
-        <RoutesLinks toggleMenu={() => setActive(currentValue => !currentValue)} />
-      </NavBar>
-      <Switch>
-        <Route exact path='/' component={Home} />
-      </Switch>
-    </BrowserRouter>
+    <React.Fragment>
+      <MenuBar />
+      <BrowserRouter>
+        <NavBar>
+          <RoutesLinks />
+        </NavBar>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/info/:info' component={Info} />
+          <Route exact path='/report/:report' component={Report} />
+        </Switch>
+      </BrowserRouter>
+    </React.Fragment>
   );
 
 };

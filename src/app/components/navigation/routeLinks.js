@@ -1,20 +1,30 @@
-import {
-  faBars
-} from '@fortawesome/free-solid-svg-icons';
-
-import {
-  FontAwesomeIcon
-} from '@fortawesome/react-fontawesome';
+import platform from 'electron-platform';
 
 import PropTypes from 'prop-types';
 
 import React from 'react';
 
 import {
+  connect
+} from 'react-redux';
+
+import {
   NavLink
 } from 'react-router-dom';
 
+import {
+  useTransition
+} from 'react-spring';
+
 import Logo from 'app/assets/logo.png';
+
+import {
+  setIsActive
+} from 'app/redux/actions';
+
+import {
+  Hamburger
+} from '../hamburger/hamburger';
 
 import {
   Dropdown
@@ -24,73 +34,113 @@ import {
   NavbarDropdownContent
 } from './dropdownContent';
 
-const Links = ({ toggleMenu, }) => (
-  <React.Fragment>
-    <a href='#mobile' className='icon' onClick={toggleMenu}>
-      <FontAwesomeIcon data-testid='mobile' icon={faBars} />
-    </a>
+import {
+  Mobile
+} from './mobile';
 
-    <div className='mobile-menu'>
-      <NavLink exact strict to='/'>
-        Home
+const mapStateToProps = (state) => ({
+  isMobile: state.isActive,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggleMenu: () => dispatch(setIsActive()),
+});
+
+const Links = ({ toggleMenu, isMobile, }) => {
+
+  const transitions = useTransition(isMobile, null, {
+    from: {
+      opacity: 0,
+      transform: 'translate3d(0,-40px,0)',
+    },
+    enter: {
+      opacity: 1,
+      transform: 'translate3d(0,0px,0)',
+    },
+    reset: true,
+    unique: true,
+  });
+
+  return (
+    <React.Fragment>
+      <a href='#mobile' className='icon'>
+        <Hamburger onClick={toggleMenu}/>
+      </a>
+      {transitions.map(({ item, props, key, }) =>
+        item ? (
+          <Mobile key={key} style={props} isMobile={isMobile} />
+        ) : platform.isPureWeb ? (
+          <div key={key} className='mobile-menu'>
+            <NavLink exact strict to='/'>
+              Home
+            </NavLink>
+
+            <Dropdown isMobile={isMobile} className='some-div'>
+              <span className='dropdown-header'>Info</span>
+              <NavbarDropdownContent className='inner'>
+                <NavLink exact strict to='/info/client'>
+                  Client Info
+                </NavLink>
+
+                <NavLink exact strict to='/info/supplier'>
+                  Supplier Info
+                </NavLink>
+
+                <NavLink exact strict to='/info/supplement'>
+                  Supplement Info
+                </NavLink>
+              </NavbarDropdownContent>
+            </Dropdown>
+            <Dropdown isMobile={isMobile}>
+              <span className='dropdown-header'>
+                Day-to-day report
+              </span>
+              <NavbarDropdownContent className='inner'>
+                <NavLink exact strict to='/report/unpaid-invoices'>
+                  Unpaid Invoices
+                </NavLink>
+
+                <NavLink exact strict to='/report/birthdays'>
+                  Birthdays for today (current date)
+                </NavLink>
+
+                <NavLink exact strict to='/report/stock-levels'>
+                  Minimum stock levels
+                </NavLink>
+
+                <NavLink exact strict to='/report/top-clients'>
+                  MIS report - Top 10 clients for 2018 and 2019
+                </NavLink>
+
+                <NavLink exact strict to='/report/purchase-stats'>
+                  Purchases statistics (2012 - current)
+                </NavLink>
+
+                <NavLink exact strict to='/report/client-info'>
+                  Client Information Query
+                </NavLink>
+              </NavbarDropdownContent>
+            </Dropdown>
+          </div>
+        ) : ''
+      )}
+      <NavLink exact strict to='/' className='logo-link'>
+        <div className='logo'>
+          <img src={Logo} alt='logo' />
+          <p>ALT-HEALTH</p>
+        </div>
       </NavLink>
+    </React.Fragment>
+  );
 
-      <Dropdown className='some-div'>
-        <span className='dropdown-header'>Info</span>
-        <NavbarDropdownContent className='inner'>
-          <NavLink exact strict to='/reminders'>
-            Client Info
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            Supplier Info
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            Supplement Info
-          </NavLink>
-        </NavbarDropdownContent>
-      </Dropdown>
-      <Dropdown>
-        <span className='dropdown-header'>Day-to-day report</span>
-        <NavbarDropdownContent className='inner'>
-          <NavLink exact strict to='/reminders'>
-            Unpaid Invoices
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            Birthdays for today (current date)
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            Minimum stock levels
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            MIS report - Top 10 clients for 2018 and 2019
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            Purchases statistics (2012 - current)
-          </NavLink>
-
-          <NavLink exact strict to='/reminders'>
-            Client Information Query
-          </NavLink>
-        </NavbarDropdownContent>
-      </Dropdown>
-    </div>
-    <NavLink exact strict to='/' className='logo-link'>
-      <div className='logo'>
-        <img src={Logo} alt='logo' />
-        <p>ALT-HEALTH</p>
-      </div>
-    </NavLink>
-  </React.Fragment>
-);
+};
 
 Links.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired,
 };
 
-export const RoutesLinks = Links;
+export const RoutesLinks = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Links);
