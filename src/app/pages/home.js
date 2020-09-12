@@ -33,13 +33,14 @@ import {
 const mapStateToProps = (state) => ({
   sliderIndex: state.sliderIndex,
   sliderImages: state.sliderImages,
+  isActive: state.isActive,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateSliderIndex: () => dispatch(updateSliderIndex()),
 });
 
-function AltHome({ sliderIndex, sliderImages, updateSliderIndex, }) {
+function AltHome({ sliderIndex, sliderImages, updateSliderIndex, isActive, }) {
 
   const transitions = useTransition(sliderIndex, null, {
     native: true,
@@ -63,13 +64,17 @@ function AltHome({ sliderIndex, sliderImages, updateSliderIndex, }) {
 
     const interval = setInterval(() => {
 
-      updateSliderIndex();
+      if (!isActive) {
+
+        updateSliderIndex();
+
+      }
 
     }, 3000);
 
     return () => clearInterval(interval);
 
-  }, [updateSliderIndex]);
+  }, [updateSliderIndex, isActive]);
 
   return (
     <Animated>
@@ -108,6 +113,7 @@ AltHome.propTypes = {
   sliderIndex: PropTypes.number,
   sliderImages: PropTypes.array,
   updateSliderIndex: PropTypes.func,
+  isActive: PropTypes.bool,
 };
 
 export const Home = connect(

@@ -21,7 +21,7 @@ export function Hamburger({ onClick, }) {
   };
 
   return (
-    <HamContainer isOpen={isOpen} onClick={updateHam}>
+    <HamContainer isOpen={isOpen} data-testid='ham' onClick={updateHam}>
       <div className='menu-btn__burger open'></div>
     </HamContainer>
   );

@@ -24,6 +24,7 @@ export function Mobile({ style, isMobile, key, }) {
     <animated.div
       key={key}
       className='mobile-menu'
+      data-testid='mobile-view'
       style={style}
     >
       <NavLink exact strict to='/'>

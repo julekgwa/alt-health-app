@@ -37,26 +37,28 @@ export function MenuBar() {
   return (
     <MenuBarContainer>
       <FontAwesomeIcon
+        data-testid='min'
         style={{
           marginTop: '-9px',
           paddingRight: '10px',
-          '-webkit-app-region': 'no-drag',
+          WebkitAppRegion: 'no-drag',
         }}
         size='1x'
         icon={faWindowMinimize}
         onClick={onMin}
       />
       <FontAwesomeIcon
+        data-testid='max'
         onClick={onMax}
         style={{
           paddingRight: '10px',
-          '-webkit-app-region': 'no-drag',
+          WebkitAppRegion: 'no-drag',
         }}
         size='1x'
         icon={faWindowMaximize}
       />
-      <FontAwesomeIcon style={{
-        '-webkit-app-region': 'no-drag',
+      <FontAwesomeIcon data-testid='close' style={{
+        WebkitAppRegion: 'no-drag',
       }} onClick={onClose} size='1x' icon={faTimes} />
     </MenuBarContainer>
   );

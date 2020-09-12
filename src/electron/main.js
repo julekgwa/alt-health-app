@@ -69,7 +69,7 @@ ipcMain.on('window:max', () => {
 
 });
 
-ipcMain.on('window:mix', () => {
+ipcMain.on('window:min', () => {
 
   mainWindow.minimize();
 
