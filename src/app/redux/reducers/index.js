@@ -15,6 +15,10 @@ import {
   UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
+import {
+  createHeaders
+} from 'app/utils';
+
 const sliderImages = [
   {
     slider1: Medicine2,
@@ -32,6 +36,7 @@ const initState = {
   sliderImages: sliderImages,
   isLoading: false,
   data: [],
+  tableHeadersAndAccessors: [],
 };
 
 export function rootReducer(state = initState, action) {
@@ -64,9 +69,11 @@ export function rootReducer(state = initState, action) {
     };
 
   case GET_DATA:
+
     return {
       ...state,
       data: action.payload,
+      tableHeadersAndAccessors: createHeaders(action.payload),
     };
 
   default:

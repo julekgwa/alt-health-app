@@ -32,6 +32,34 @@ const MainContainer = styled.div`
       align-content: center;
       display: flex;
     }
+
+    table {
+    border-spacing: 0;
+    border: 1px solid black;
+    font-size: 70%;
+    background-color: ${Colors.White};
+    width: 100%;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
 `;
 
 export const Container = connect(mapStateToProps)(MainContainer);
