@@ -78,15 +78,15 @@ const Links = ({ toggleMenu, isMobile, }) => {
             <Dropdown isMobile={isMobile} className='some-div'>
               <span className='dropdown-header'>Info</span>
               <NavbarDropdownContent className='inner'>
-                <NavLink exact strict to='/info/client'>
+                <NavLink exact strict to='/info/clients'>
                   Client Info
                 </NavLink>
 
-                <NavLink exact strict to='/info/supplier'>
+                <NavLink exact strict to='/info/suppliers'>
                   Supplier Info
                 </NavLink>
 
-                <NavLink exact strict to='/info/supplement'>
+                <NavLink exact strict to='/info/supplements'>
                   Supplement Info
                 </NavLink>
               </NavbarDropdownContent>
