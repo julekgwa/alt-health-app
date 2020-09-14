@@ -26,6 +26,12 @@ const MainContainer = styled.div`
       font-size: 14px;
       color: ${Colors.darkGrayishBlue}
     }
+
+    .loader {
+      justify-content: center;
+      align-content: center;
+      display: flex;
+    }
 `;
 
 export const Container = connect(mapStateToProps)(MainContainer);
