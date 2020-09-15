@@ -46,7 +46,11 @@ const sliderImages = [
 const initState = {
   isActive: false,
   sliderIndex: 0,
-  sliderImages,
+  sliderImages: sliderImages,
+  isLoading: false,
+  data: [],
+  tableHeadersAndAccessors: [],
+  showPopup: false,
 };
 
 const store = mockStore(initState);

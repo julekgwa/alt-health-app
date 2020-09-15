@@ -12,6 +12,7 @@ import {
   GET_DATA,
   IS_DESKTOP_MENU,
   SET_LOADER,
+  SHOW_POPUP,
   UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
@@ -37,6 +38,7 @@ const initState = {
   isLoading: false,
   data: [],
   tableHeadersAndAccessors: [],
+  showPopup: false,
 };
 
 export function rootReducer(state = initState, action) {
@@ -64,8 +66,15 @@ export function rootReducer(state = initState, action) {
   case ERROR:
     return {
       ...state,
+      showPopup: true,
       isError: action.payload.error,
       message: action.payload.message,
+    };
+
+  case SHOW_POPUP:
+    return {
+      ...state,
+      showPopup: action.payload,
     };
 
   case GET_DATA:
@@ -73,6 +82,7 @@ export function rootReducer(state = initState, action) {
     return {
       ...state,
       data: action.payload,
+      isError: false,
       tableHeadersAndAccessors: createHeaders(action.payload),
     };
 
