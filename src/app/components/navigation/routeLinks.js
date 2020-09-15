@@ -64,7 +64,7 @@ const Links = ({ toggleMenu, isMobile, }) => {
   return (
     <React.Fragment>
       <a href='#mobile-menu' className='icon'>
-        <Hamburger onClick={toggleMenu}/>
+        <Hamburger isOpen={isMobile} onClick={toggleMenu}/>
       </a>
       {transitions.map(({ item, props, key, }) =>
         item ? (

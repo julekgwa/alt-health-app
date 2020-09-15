@@ -1,27 +1,15 @@
 import PropTypes from 'prop-types';
 
-import React,
-{
-  useState
-} from 'react';
+import React from 'react';
 
 import {
   HamContainer
 } from './container';
 
-export function Hamburger({ onClick, }) {
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const updateHam = () => {
-
-    setIsOpen(!isOpen);
-    onClick();
-
-  };
+export function Hamburger({ onClick, isOpen, }) {
 
   return (
-    <HamContainer isOpen={isOpen} data-testid='ham' onClick={updateHam}>
+    <HamContainer isOpen={isOpen} data-testid='ham' onClick={onClick}>
       <div className='menu-btn__burger open'></div>
     </HamContainer>
   );
@@ -30,5 +18,6 @@ export function Hamburger({ onClick, }) {
 
 Hamburger.propTypes = {
   onClick: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool,
 };
 
