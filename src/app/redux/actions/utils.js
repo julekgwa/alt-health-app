@@ -3,6 +3,10 @@ import {
 } from 'app/fetch/fetch';
 
 import {
+  cleanErrors
+} from 'app/utils';
+
+import {
   setError
 } from './index';
 
@@ -29,7 +33,7 @@ export const fetchItem = (dispatch, requestOptions, isLoading, action) => {
 
       dispatch(setError(action.error, {
         error: true,
-        message: error.message,
+        message: cleanErrors(error),
       }));
       dispatcher(dispatch, action.loaderType, !isLoading);
 

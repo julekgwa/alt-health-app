@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
-import React, {
+import React,
+{
   useEffect
 } from 'react';
 
@@ -28,12 +29,21 @@ import {
 } from 'app/components/containers/container';
 
 import {
-  getInfo
+  Popup
+} from 'app/components/popup/popup';
+
+import {
+  getInfo,
+  showPopup
 } from 'app/redux/actions';
 
 import {
   Colors
 } from 'app/styles/colors';
+
+import {
+  capitalize
+} from 'app/utils';
 
 const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
@@ -41,10 +51,12 @@ const mapStateToProps = (state) => ({
   isError: state.isError,
   message: state.message,
   tableHeadersAndAccessors: state.tableHeadersAndAccessors,
+  showPopup: state.showPopup,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getInfo: (payload) => dispatch(getInfo(payload)),
+  displayPopup: (payload) => dispatch(showPopup(payload)),
 });
 
 function InfoPage({
@@ -52,6 +64,11 @@ function InfoPage({
   getInfo,
   tableHeadersAndAccessors,
   data,
+  isError,
+  message,
+  showPopup,
+  displayPopup,
+  pageSize = 10,
 }) {
 
   const { info, } = useParams();
@@ -73,7 +90,7 @@ function InfoPage({
       columns: tableHeadersAndAccessors,
       data,
       initialState: {
-        pageSize: 10,
+        pageSize: pageSize,
         pageIndex: 0,
       },
     },
@@ -90,7 +107,7 @@ function InfoPage({
     <Animated>
       <Container>
         {isLoading ? (
-          <div className='loader'>
+          <div data-testid='loader' className='loader'>
             <Loader
               type='Bars'
               color={Colors.White}
@@ -98,8 +115,11 @@ function InfoPage({
               width={100}
             />
           </div>
+        ) : isError ? (
+          <Popup show={showPopup} message={message} isError={isError} onButtonPress={()=> displayPopup(false)} />
         ) : (
-          <div>
+          <div className='table-container'>
+            <p>{capitalize(info)} Info</p>
             <table {...getTableProps()}>
               <thead>
                 {headerGroups.map((headerGroup, m) => (
@@ -136,12 +156,14 @@ function InfoPage({
             </table>
             <div>
               <button
+                data-testid='prev'
                 onClick={() => previousPage()}
                 disabled={!canPreviousPage}
               >
                 Previous Page
               </button>
               <button
+                data-testid='next'
                 onClick={() => nextPage()}
                 disabled={!canNextPage}
               >
@@ -169,6 +191,9 @@ InfoPage.propTypes = {
   isError: PropTypes.bool,
   message: PropTypes.string,
   tableHeadersAndAccessors: PropTypes.array,
+  showPopup: PropTypes.bool,
+  displayPopup: PropTypes.func,
+  pageSize: PropTypes.number,
 };
 
 export const Info = connect(

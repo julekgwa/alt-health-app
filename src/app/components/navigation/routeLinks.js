@@ -68,7 +68,7 @@ const Links = ({ toggleMenu, isMobile, }) => {
       </a>
       {transitions.map(({ item, props, key, }) =>
         item ? (
-          <Mobile key={key} style={props} isMobile={isMobile} />
+          <Mobile key={key} style={props} toggleMenu={toggleMenu} isMobile={isMobile} />
         ) : platform.isPureWeb ? (
           <div key={key} className='mobile-menu'>
             <NavLink exact strict to='/'>
@@ -116,7 +116,7 @@ const Links = ({ toggleMenu, isMobile, }) => {
                   Purchases statistics (2012 - current)
                 </NavLink>
 
-                <NavLink exact strict to='/report/client-info'>
+                <NavLink exact strict to='/report/incomplete-client-info'>
                   Client Information Query
                 </NavLink>
               </NavbarDropdownContent>

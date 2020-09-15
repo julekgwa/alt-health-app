@@ -33,6 +33,22 @@ const MainContainer = styled.div`
       display: flex;
     }
 
+    .fetch-error {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: ${Colors.White};
+      min-height: 200px;
+    }
+
+    .table-container {
+      padding: 10px;
+
+      p {
+        color: ${Colors.White};
+      }
+    }
+
     table {
     border-spacing: 0;
     border: 1px solid black;

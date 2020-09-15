@@ -18,7 +18,7 @@ import {
   NavbarDropdownContent
 } from './dropdownContent';
 
-export function Mobile({ style, isMobile, key, }) {
+export function Mobile({ style, isMobile, key, toggleMenu, }) {
 
   return (
     <animated.div
@@ -27,22 +27,22 @@ export function Mobile({ style, isMobile, key, }) {
       data-testid='mobile-view'
       style={style}
     >
-      <NavLink exact strict to='/'>
+      <NavLink onClick={toggleMenu} exact strict to='/'>
                 Home
       </NavLink>
 
       <Dropdown isMobile={isMobile} className='some-div'>
         <span className='dropdown-header'>Info</span>
         <NavbarDropdownContent className='inner'>
-          <NavLink exact strict to='/info/client'>
+          <NavLink onClick={toggleMenu} exact strict to='/info/clients'>
                     Client Info
           </NavLink>
 
-          <NavLink exact strict to='/info/supplier'>
+          <NavLink onClick={toggleMenu} exact strict to='/info/suppliers'>
                     Supplier Info
           </NavLink>
 
-          <NavLink exact strict to='/info/supplement'>
+          <NavLink onClick={toggleMenu} exact strict to='/info/supplements'>
                     Supplement Info
           </NavLink>
         </NavbarDropdownContent>
@@ -52,27 +52,27 @@ export function Mobile({ style, isMobile, key, }) {
                   Day-to-day report
         </span>
         <NavbarDropdownContent className='inner'>
-          <NavLink exact strict to='/report/unpaid-invoices'>
+          <NavLink onClick={toggleMenu} exact strict to='/report/unpaid-invoices'>
                     Unpaid Invoices
           </NavLink>
 
-          <NavLink exact strict to='/report/birthdays'>
+          <NavLink onClick={toggleMenu} exact strict to='/report/birthdays'>
                     Birthdays for today (current date)
           </NavLink>
 
-          <NavLink exact strict to='/report/stock-levels'>
+          <NavLink onClick={toggleMenu} exact strict to='/report/stock-levels'>
                     Minimum stock levels
           </NavLink>
 
-          <NavLink exact strict to='/report/top-clients'>
+          <NavLink onClick={toggleMenu} exact strict to='/report/top-clients'>
                     MIS report - Top 10 clients for 2018 and 2019
           </NavLink>
 
-          <NavLink exact strict to='/report/purchase-stats'>
+          <NavLink onClick={toggleMenu} exact strict to='/report/purchase-stats'>
                     Purchases statistics (2012 - current)
           </NavLink>
 
-          <NavLink exact strict to='/report/client-info'>
+          <NavLink onClick={toggleMenu} exact strict to='/report/incomplete-client-info'>
                     Client Information Query
           </NavLink>
         </NavbarDropdownContent>
@@ -85,5 +85,6 @@ Mobile.propTypes = {
   style: PropTypes.any,
   isMobile: PropTypes.bool,
   key: PropTypes.string,
+  toggleMenu: PropTypes.func,
 };
 
