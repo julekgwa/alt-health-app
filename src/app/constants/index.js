@@ -4,6 +4,10 @@ export const ERROR = 'ERROR';
 export const SET_LOADER = 'SET_LOADER';
 export const GET_DATA = 'GET_DATA';
 export const SHOW_POPUP = 'SHOW_POPUP';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const SET_CLIENT_INFO = 'SET_CLIENT_INFO';
+export const SET_INVOICE_INFO = 'SET_INVOICE_INFO';
+export const SET_INVOICE_ITEMS = 'SET_INVOICE_ITEMS';
 
 export const REQUEST_METHOD = {
   get: 'GET',

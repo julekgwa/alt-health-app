@@ -121,6 +121,27 @@ const Navigation = styled.nav`
 
     `}
 
+    .cart {
+      position: relative;
+      margin-right: 30px;
+      margin-top: 10px;
+
+      span {
+        position: absolute;
+        top: -12px;
+        right: -22px;
+        background-color: ${Colors.White};
+        color: ${Colors.veryDarkGrayishBlue};
+        border-radius: 50%;
+        padding: 1px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+      }
+    }
+
   @media screen and (max-width: 480px) {
     a:not(.icon) {
       display: none;

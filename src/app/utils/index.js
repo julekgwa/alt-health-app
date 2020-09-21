@@ -2,7 +2,8 @@ import {
   TECHNICAL_ERROR_MSG
 } from 'app/constants';
 
-export const capitalize = (str, lower = false) => str &&
+export const capitalize = (str, lower = false) =>
+  str &&
   (lower ? str.toLowerCase() : str).replace(
     /(?:^|\s|["'([{])+\S/g,
     (match) => match.toUpperCase()
@@ -33,20 +34,23 @@ export const createHeaders = (headersData) => {
 
   }
 
-  return Object.keys(headersData[0]).map(key => ({
+  return Object.keys(headersData[0]).map((key) => ({
     Header: cleanTableHeader(key),
     accessor: key,
   }));
 
 };
 
-export const cleanErrors =(error) => {
+export const cleanErrors = (error) => {
 
   if (error && typeof error.message === 'string') {
 
     const message = error.message;
 
-    return message.toLowerCase().includes('unexpected token') || message.toLowerCase().includes('failed to fetch') ? TECHNICAL_ERROR_MSG : message;
+    return message.toLowerCase().includes('unexpected token') ||
+      message.toLowerCase().includes('failed to fetch')
+      ? TECHNICAL_ERROR_MSG
+      : message;
 
   }
 
@@ -61,5 +65,120 @@ export function handleKeyDown(e, func) {
     typeof func === 'function' && func();
 
   }
+
+}
+
+export function uuid() {
+
+  let chars = '0123456789abcdef'.split('');
+
+  let uuid = [],
+    rnd = Math.random,
+    r;
+
+  uuid[8] = uuid[13] = uuid[18] = uuid[23] = '-';
+  uuid[14] = '4'; // version 4
+
+  for (let i = 0; i < 36; i++) {
+
+    if (!uuid[i]) {
+
+      r = 0 | (rnd() * 16);
+
+      uuid[i] = chars[i === 19 ? (r & 0x3) | 0x8 : r & 0xf];
+
+    }
+
+  }
+
+  return uuid.join('');
+
+}
+
+export function formatInvoiceOptions(invoiceData) {
+
+  if (!invoiceData) {
+
+    return [];
+
+  }
+
+  return invoiceData.map(invoice => ({
+    value: invoice.Inv_Num,
+    label: invoice.Inv_Num,
+  }));
+
+}
+
+export function calculateVAT(totalPrice) {
+
+  let price = totalPrice;
+
+  if (typeof totalPrice === 'string') {
+
+    price = parseFloat(totalPrice).toFixed(2);
+
+  }
+
+  const VAT = Number(process.env.REACT_APP_GET_VAT);
+  const multiplier = VAT / 100 + 1;
+
+  return `R${(price * multiplier).toFixed(2)}`;
+
+}
+
+export function countCartItems(cartItems) {
+
+  return Object.values(cartItems).reduce((t, { Item_quantity, }) => t + Item_quantity, 0);
+
+}
+
+const convertTotalToCurrency = (items) => {
+
+  return items.map(item => {
+
+    item.price = parseFloat(item.Cost_excl).toFixed(2);
+    item.total = item.Item_quantity * item.price;
+
+    return item;
+
+  });
+
+};
+
+export function calculateCartTotal(cartItems, incVat = false) {
+
+  const items = convertTotalToCurrency(cartItems);
+  const total = Object.values(items).reduce((t, { total, }) => t + total, 0);
+
+  if (!incVat) {
+
+    return total.toFixed(2);
+
+  }
+  const VAT = Number(process.env.REACT_APP_GET_VAT);
+  const multiplier = VAT / 100 + 1;
+
+  return (total * multiplier).toFixed(2);
+
+}
+
+export function addItemToCart(cart, cartItem) {
+
+  const addItem = cart.find(
+    (item) => item.Supplement_id === cartItem.Supplement_id
+  );
+
+  if (addItem) {
+
+    addItem.Item_quantity += 1;
+
+    return cart;
+
+  }
+
+  cartItem.Item_quantity = 1;
+
+  return [...cart, cartItem];
 
 }

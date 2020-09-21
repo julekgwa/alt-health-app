@@ -26,7 +26,7 @@ function AnimatedDiv(props) {
   const marginLeft = 0.075 * window.outerWidth + 'px';
   const style = useSpring({
     width: isActive ? '85%' : '100%',
-    marginTop: isActive ? '100px' : '0px',
+    marginTop: isActive ? '200px' : '0px',
     marginLeft: isActive ? marginLeft : '0px',
   });
 

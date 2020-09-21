@@ -8,16 +8,23 @@ import Medicine3 from 'app/assets/medicine-3.jpg';
 import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
+  ADD_TO_CART,
   ERROR,
   GET_DATA,
   IS_DESKTOP_MENU,
+  SET_CLIENT_INFO,
+  SET_INVOICE_INFO,
+  SET_INVOICE_ITEMS,
   SET_LOADER,
   SHOW_POPUP,
   UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
 import {
-  createHeaders
+  addItemToCart,
+  countCartItems,
+  createHeaders,
+  formatInvoiceOptions
 } from 'app/utils';
 
 const sliderImages = [
@@ -39,6 +46,11 @@ const initState = {
   data: [],
   tableHeadersAndAccessors: [],
   showPopup: false,
+  cart: [],
+  totalItems: 0,
+  clientInfo: [],
+  invoiceInfo: [],
+  invoiceItems: [],
 };
 
 export function rootReducer(state = initState, action) {
@@ -81,9 +93,38 @@ export function rootReducer(state = initState, action) {
 
     return {
       ...state,
-      data: action.payload,
+      data: action.payload || [],
       isError: false,
-      tableHeadersAndAccessors: createHeaders(action.payload),
+      tableHeadersAndAccessors: createHeaders(action.payload) || [],
+    };
+
+  case SET_INVOICE_ITEMS:
+
+    return {
+      ...state,
+      invoiceItems: action.payload,
+    };
+
+  case SET_INVOICE_INFO:
+    return {
+      ...state,
+      invoiceInfo: formatInvoiceOptions(action.payload),
+    };
+
+  case SET_CLIENT_INFO:
+    return {
+      ...state,
+      clientInfo: action.payload,
+    };
+
+  case ADD_TO_CART:
+    // eslint-disable-next-line no-case-declarations
+    const cart = addItemToCart(state.cart, action.payload);
+
+    return {
+      ...state,
+      cart: cart,
+      totalItems: countCartItems(cart),
     };
 
   default:

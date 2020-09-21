@@ -1,8 +1,12 @@
 import {
+  ADD_TO_CART,
   ERROR,
   GET_DATA,
   IS_DESKTOP_MENU,
   REQUEST_METHOD,
+  SET_CLIENT_INFO,
+  SET_INVOICE_INFO,
+  SET_INVOICE_ITEMS,
   SET_LOADER,
   SHOW_POPUP,
   UPDATE_SLIDER_INDEX
@@ -22,6 +26,8 @@ const GET_STOCK_LEVELS = BASE_URL + process.env.REACT_APP_GET_STOCK_LEVELS;
 const GET_TOP_CLIENTS = BASE_URL + process.env.REACT_APP_GET_TOP_CLIENTS;
 const GET_PURCHASE_STATS = BASE_URL + process.env.REACT_APP_GET_PURCHASE_STATS;
 const GET_CLIENTS_WITH_INCOMPLETE_DATA = BASE_URL + process.env.REACT_APP_GET_CLIENTS_WITH_INCOMPLETE_DATA;
+const GET_INVOICES_INFO = BASE_URL + process.env.REACT_APP_GET_INVOICES_INFO;
+const GET_INVOICE_ITEMS = BASE_URL + process.env.REACT_APP_GET_INVOICE_ITEMS;
 
 const infoUrls = {
   clients: GET_CLIENTS,
@@ -67,6 +73,7 @@ export function getInfo(payload) {
     const requestOptions = {
       url: infoUrls[payload],
       method: REQUEST_METHOD.get,
+      isClientInfo: payload === 'clients',
     };
 
     const action = {
@@ -81,10 +88,70 @@ export function getInfo(payload) {
 
 }
 
+export function getInvoiceInfo() {
+
+  return dispatch => {
+
+    const requestOptions = {
+      url: GET_INVOICES_INFO,
+      method: REQUEST_METHOD.get,
+    };
+
+    const action = {
+      type: SET_INVOICE_INFO,
+      loaderType: SET_LOADER,
+      error: ERROR,
+    };
+
+    return fetchItem(dispatch, requestOptions, true, action);
+
+  };
+
+}
+
+export function getInvoiceItems(invoiceNumber) {
+
+  return dispatch => {
+
+    const requestOptions = {
+      url: GET_INVOICE_ITEMS + invoiceNumber,
+      method: REQUEST_METHOD.get,
+    };
+
+    const action = {
+      type: SET_INVOICE_ITEMS,
+      loaderType: SET_LOADER,
+      error: ERROR,
+    };
+
+    return fetchItem(dispatch, requestOptions, true, action);
+
+  };
+
+}
+
 export function showPopup(payload) {
 
   return {
     type: SHOW_POPUP,
+    payload,
+  };
+
+}
+
+export function setClientInfo(payload) {
+
+  return {
+    type: SET_CLIENT_INFO,
+    payload,
+  };
+
+}
+
+export function addToCart(payload) {
+
+  return {
+    type: ADD_TO_CART,
     payload,
   };
 

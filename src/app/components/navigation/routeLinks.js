@@ -1,3 +1,11 @@
+import {
+  faShoppingCart
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
 import platform from 'electron-platform';
 
 import PropTypes from 'prop-types';
@@ -15,8 +23,6 @@ import {
 import {
   useTransition
 } from 'react-spring';
-
-import Logo from 'app/assets/logo.png';
 
 import {
   setIsActive
@@ -40,13 +46,15 @@ import {
 
 const mapStateToProps = (state) => ({
   isMobile: state.isActive,
+  cart: state.cart,
+  total: state.totalItems,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   toggleMenu: () => dispatch(setIsActive()),
 });
 
-const Links = ({ toggleMenu, isMobile, }) => {
+const Links = ({ toggleMenu, isMobile, total, }) => {
 
   const transitions = useTransition(isMobile, null, {
     from: {
@@ -124,10 +132,10 @@ const Links = ({ toggleMenu, isMobile, }) => {
           </div>
         ) : ''
       )}
-      <NavLink exact strict to='/' className='logo-link'>
-        <div className='logo'>
-          <img src={Logo} alt='logo' />
-          <p>ALT-HEALTH</p>
+      <NavLink exact strict to='/cart' className='logo-link'>
+        <div className='cart'>
+          <span>{total}</span>
+          <FontAwesomeIcon color='red' icon={faShoppingCart} />
         </div>
       </NavLink>
     </React.Fragment>
@@ -138,6 +146,7 @@ const Links = ({ toggleMenu, isMobile, }) => {
 Links.propTypes = {
   toggleMenu: PropTypes.func.isRequired,
   isMobile: PropTypes.bool.isRequired,
+  total: PropTypes.number,
 };
 
 export const RoutesLinks = connect(
