@@ -5,8 +5,10 @@ import {
 } from 'app/styles/colors';
 
 export const InvoiceContainer = styled.div`
-  width: 100%;
+  width: 93%;
   background-color: ${Colors.White};
+  margin: 0 auto;
+  border-radius: 2px;
 
   .invoice-body {
     display: flex;
@@ -23,11 +25,19 @@ export const InvoiceContainer = styled.div`
 
       th,
       td {
-        text-align: left;
         padding: 8px;
         border-bottom: 1px solid #ddd;
       }
     }
+  }
+  .content{ width: 1% }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .align-left {
+    text-align: left;
   }
 
   .tr-subtotal {
@@ -45,6 +55,15 @@ export const InvoiceContainer = styled.div`
     }
   }
 
+  .invoice-info-p {
+    color: ${Colors.softBlue};
+
+    span {
+      color: ${Colors.Black};
+      display: block;
+    }
+  }
+
   .divider {
     width: 2px;
     background-color: #ddd;
@@ -56,6 +75,7 @@ export const InvoiceContainer = styled.div`
     flex-wrap: wrap;
     flex: 1;
     padding: 5px;
+    text-align: right;
   }
 
   .invoice-header-container {

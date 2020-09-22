@@ -9,4 +9,5 @@ export const Colors = {
   verySoftRed: '#E79B9B',
   veryDarkGrayishBlue: '#32373E',
   veryDarkBlue: '#292D32',
+  softBlue: '#8394FC',
 };

@@ -8,6 +8,7 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const SET_CLIENT_INFO = 'SET_CLIENT_INFO';
 export const SET_INVOICE_INFO = 'SET_INVOICE_INFO';
 export const SET_INVOICE_ITEMS = 'SET_INVOICE_ITEMS';
+export const SET_CLIENT_INVOICE_INFO = 'SET_CLIENT_INVOICE_INFO';
 
 export const REQUEST_METHOD = {
   get: 'GET',

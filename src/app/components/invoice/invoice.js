@@ -9,19 +9,27 @@ import {
 import InvoiceLogo from 'app/assets/invoice.png';
 
 import {
-  calculateCartTotal
+  calculateCartTotal,
+  convertDate,
+  getCurrentDate
 } from 'app/utils';
+
+import {
+  Button
+} from '../button/button';
 
 import {
   InvoiceContainer
 } from './invoiceContainer';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   cartItems: state.cart,
   invoiceItems: state.invoiceItems,
+  invoiceClientInfo: state.invoiceClientInfo,
+  nextInvoiceNumber: state.nextInvoiceNumber,
 });
 
-const Inv = ({ cartItems, invoiceItems, }) => {
+const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, }) => {
 
   if (cartItems.length <= 0 && invoiceItems.length <= 0) {
 
@@ -42,64 +50,127 @@ const Inv = ({ cartItems, invoiceItems, }) => {
   const vat = (total - subtotal).toFixed(2);
 
   return (
-    <InvoiceContainer>
-      <div className='invoice-header-container'>
-        <p>invoice</p>
-        <img src={InvoiceLogo} alt='invoice-logo' />
-      </div>
-      <div className='invoice-body'>
-        <div className='line-items'>
-          <table className='invoice-tbl'>
-            <tr>
-              <th>Description</th>
-              <th>Price (excl)</th>
-              <th>Qty</th>
-              <th>Total (excl)</th>
-            </tr>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td>{item.Description}</td>
-                <td>R{item.Cost_excl}</td>
-                <td>{item.Item_quantity}</td>
-                <td>R{calculateTotalPrice(item.Cost_excl, item.Item_quantity)}</td>
+    <React.Fragment>
+      <InvoiceContainer>
+        <div className='invoice-header-container'>
+          <p>invoice</p>
+          <img src={InvoiceLogo} alt='invoice-logo' />
+        </div>
+        <div className='invoice-body'>
+          <div className='line-items'>
+            <table className='invoice-tbl'>
+              <tr>
+                <th className='align-left'>Description</th>
+                <th className='align-right'>Price (excl)</th>
+                <th className='align-right content'>Qty</th>
+                <th className='align-right'>Total (excl)</th>
               </tr>
-            ))}
+              {items.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.Description}</td>
+                  <td className='align-right'>R{item.Cost_excl}</td>
+                  <td className='align-right'>{item.Item_quantity}</td>
+                  <td className='align-right'>
+                  R
+                    {calculateTotalPrice(
+                      item.Cost_excl,
+                      item.Item_quantity
+                    )}
+                  </td>
+                </tr>
+              ))}
 
-            <tr className='tr-divider'>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
+              <tr className='tr-divider'>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
 
-            <tr className='tr-subtotal'>
-              <td></td>
-              <td></td>
-              <td>Subtotal</td>
-              <td>R{subtotal}</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>VAT</td>
-              <td>R{vat}</td>
-            </tr>
+              <tr className='tr-subtotal'>
+                <td></td>
+                <td></td>
+                <td className='align-right'>Subtotal</td>
+                <td className='align-right'>R{subtotal}</td>
+              </tr>
+              <tr className='tr-subtotal'>
+                <td></td>
+                <td></td>
+                <td className='align-right'>VAT</td>
+                <td className='align-right'>R{vat}</td>
+              </tr>
 
-            <tr>
-              <td></td>
-              <td></td>
-              <td>Grand Total Incl. VAT</td>
-              <td>R{total}</td>
-            </tr>
-          </table>
+              <tr className='tr-subtotal'>
+                <td></td>
+                <td></td>
+                <td className='align-right'>Total</td>
+                <td className='align-right'>R{total}</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td className='align-right'>Paid</td>
+                <td className='align-right'>
+                R
+                  {items.length &&
+                typeof items[0].Inv_Paid === 'string' &&
+                items[0].Inv_Paid.toLowerCase() === 'y'
+                    ? total
+                    : 0}
+                </td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td className='align-right'>Balance</td>
+                <td className='align-right'>
+                R
+                  {items.length &&
+                typeof items[0].Inv_Paid === 'string' &&
+                items[0].Inv_Paid.toLowerCase() === 'y'
+                    ? 0
+                    : total}
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div className='divider'></div>
+          <div className='bill-info'>
+            <p className='invoice-info-p'>
+            Bill To{' '}
+              <span>{`${invoiceClientInfo.C_name || ''} ${invoiceClientInfo.C_surname || ''}`}</span>
+              <span>{invoiceClientInfo.Address}</span>
+            </p>
+
+            <p className='invoice-info-p'>
+            Invoice Number{' '}
+              <span>{cartItems.length ? nextInvoiceNumber : items && items[0] && items[0].Inv_Num}</span>
+            </p>
+
+            <p className='invoice-info-p'>
+            Date{' '}
+              <span>
+                {cartItems.length ? getCurrentDate() : items && items[0] && convertDate(items[0].Inv_Date)}
+              </span>
+            </p>
+
+            <p className='invoice-info-p'>
+            Due Date{' '}
+              <span>
+                {cartItems.length ? '00-00-0000' : items &&
+                items[0] &&
+                convertDate(items[0].Inv_Paid_Date)}
+              </span>
+            </p>
+          </div>
         </div>
-        <div className='divider'></div>
-        <div className='bill-info'>
-          <p>Billed To:</p>
-          <p>888 TIJGER VILLAS OLD OAK ROAD BELLVILLE</p>
-        </div>
+      </InvoiceContainer>
+      <div className='button-container'>
+        <Button>Send invoice</Button>
       </div>
-    </InvoiceContainer>
+    </React.Fragment>
   );
 
 };
@@ -107,10 +178,12 @@ const Inv = ({ cartItems, invoiceItems, }) => {
 Inv.propTypes = {
   cartItems: PropTypes.array.isRequired,
   invoiceItems: PropTypes.array.isRequired,
+  invoiceClientInfo: PropTypes.object,
+  nextInvoiceNumber: PropTypes.string,
 };
 
 Inv.defaultProps = {
-  cartItems:[],
+  cartItems: [],
   invoiceItems: [],
 };
 

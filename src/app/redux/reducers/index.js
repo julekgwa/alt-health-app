@@ -13,6 +13,7 @@ import {
   GET_DATA,
   IS_DESKTOP_MENU,
   SET_CLIENT_INFO,
+  SET_CLIENT_INVOICE_INFO,
   SET_INVOICE_INFO,
   SET_INVOICE_ITEMS,
   SET_LOADER,
@@ -24,6 +25,7 @@ import {
   addItemToCart,
   countCartItems,
   createHeaders,
+  createNextInvoiceNumber,
   formatInvoiceOptions
 } from 'app/utils';
 
@@ -51,6 +53,9 @@ const initState = {
   clientInfo: [],
   invoiceInfo: [],
   invoiceItems: [],
+  invoiceClientInfo: {},
+  nextInvoiceNumber: '',
+  clientInfoOptions: [],
 };
 
 export function rootReducer(state = initState, action) {
@@ -102,6 +107,7 @@ export function rootReducer(state = initState, action) {
 
     return {
       ...state,
+      invoiceClientInfo: state.clientInfo.find(item => action.payload[0] && item.Client_id === action.payload[0].Client_id) || {},
       invoiceItems: action.payload,
     };
 
@@ -109,12 +115,20 @@ export function rootReducer(state = initState, action) {
     return {
       ...state,
       invoiceInfo: formatInvoiceOptions(action.payload),
+      nextInvoiceNumber: (createNextInvoiceNumber(action.payload)),
     };
 
   case SET_CLIENT_INFO:
     return {
       ...state,
       clientInfo: action.payload,
+      clientInfoOptions: formatInvoiceOptions(action.payload),
+    };
+
+  case SET_CLIENT_INVOICE_INFO:
+    return {
+      ...state,
+      invoiceClientInfo: action.payload || {},
     };
 
   case ADD_TO_CART:

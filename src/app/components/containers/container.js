@@ -99,6 +99,16 @@ const MainContainer = styled.div`
     margin-bottom: 10px;
   }
 
+  .select-container {
+    display: flex;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+  }
+
 `;
 
 export const Container = connect(mapStateToProps)(MainContainer);

@@ -104,8 +104,8 @@ export function formatInvoiceOptions(invoiceData) {
   }
 
   return invoiceData.map(invoice => ({
-    value: invoice.Inv_Num,
-    label: invoice.Inv_Num,
+    value: invoice.Inv_Num || invoice.Client_id,
+    label: invoice.Inv_Num || invoice.Client_id,
   }));
 
 }
@@ -133,7 +133,7 @@ export function countCartItems(cartItems) {
 
 }
 
-const convertTotalToCurrency = (items) => {
+export const convertTotalToCurrency = (items) => {
 
   return items.map(item => {
 
@@ -180,5 +180,82 @@ export function addItemToCart(cart, cartItem) {
   cartItem.Item_quantity = 1;
 
   return [...cart, cartItem];
+
+}
+
+export function getLeadingZeros(str) {
+
+  let zeros = 0;
+
+  for (let i= 0; i < str.length; i++) {
+
+    if (str[i] === '0') {
+
+      zeros++;
+      continue;
+
+    }
+
+    break;
+
+  }
+
+  return zeros;
+
+}
+
+export function createNextInvoiceNumber(invoiceData) {
+
+  const invoiceNumbers = invoiceData.map(invoice => ({
+    zeros: getLeadingZeros(invoice.Inv_Num.substring(3)),
+    number: Number(invoice.Inv_Num.substring(3)) || 0,
+  }));
+
+  const maxInv = Math.max.apply(Math, invoiceNumbers.map(function(o) {
+
+    return o.number;
+
+  }));
+
+  const obj = invoiceNumbers.find(inv => inv.number === maxInv);
+
+  const nextInvoice = (obj.number + 1).toString();
+
+  return 'INV' + nextInvoice.padStart(nextInvoice.length + obj.zeros, 0);
+
+}
+
+export function convertDate(inputFormat) {
+
+  if (Date.parse(inputFormat) < 0) {
+
+    return '00-00-0000';
+
+  }
+
+  function pad(s) {
+
+    return (s < 10) ? '0' + s : s;
+
+  }
+  const d = new Date(inputFormat);
+
+  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-');
+
+}
+
+export function getCurrentDate() {
+
+  let d = new Date(),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
+
+  return [day, month, year].join('-');
 
 }

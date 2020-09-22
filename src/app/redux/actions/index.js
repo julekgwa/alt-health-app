@@ -5,6 +5,7 @@ import {
   IS_DESKTOP_MENU,
   REQUEST_METHOD,
   SET_CLIENT_INFO,
+  SET_CLIENT_INVOICE_INFO,
   SET_INVOICE_INFO,
   SET_INVOICE_ITEMS,
   SET_LOADER,
@@ -152,6 +153,15 @@ export function addToCart(payload) {
 
   return {
     type: ADD_TO_CART,
+    payload,
+  };
+
+}
+
+export function setClientInvoiceInfo(payload) {
+
+  return {
+    type: SET_CLIENT_INVOICE_INFO,
     payload,
   };
 

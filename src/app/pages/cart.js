@@ -29,7 +29,8 @@ import {
 import {
   getInfo,
   getInvoiceInfo,
-  getInvoiceItems
+  getInvoiceItems,
+  setClientInvoiceInfo
 } from 'app/redux/actions';
 
 import {
@@ -40,15 +41,19 @@ const mapStateToProps= state => ({
   clientInfo: state.clientInfo,
   isLoading: state.isLoading,
   options: state.invoiceInfo,
+  clientInfoOptions: state.clientInfoOptions,
+  cartItems: state.cart,
+  invoiceItems: state.invoiceItems,
 });
 
 const mapDispatchToProps = dispatch => ({
   getInfo: (payload) => dispatch(getInfo(payload)),
   getInvoiceInfo: () => dispatch(getInvoiceInfo()),
   getInvoiceItems: (payload) => dispatch(getInvoiceItems(payload)),
+  setClientInvoice: (payload) => dispatch(setClientInvoiceInfo(payload)),
 });
 
-const CartPage = ({ clientInfo, isLoading, getInfo, getInvoiceInfo, options, getInvoiceItems, }) => {
+const CartPage = ({ clientInfo,cartItems,invoiceItems,clientInfoOptions, isLoading, setClientInvoice, getInfo, getInvoiceInfo, options, getInvoiceItems, }) => {
 
   const [selectValue, setSelect] = useState('');
 
@@ -70,6 +75,14 @@ const CartPage = ({ clientInfo, isLoading, getInfo, getInvoiceInfo, options, get
 
   }, [selectValue,getInvoiceItems]);
 
+  const setClientInvoiceInfo = (id) => {
+
+    const client = clientInfo.find(info => info.Client_id === id);
+
+    setClientInvoice(client);
+
+  };
+
   return (
     <Animated>
       <Container>
@@ -84,7 +97,10 @@ const CartPage = ({ clientInfo, isLoading, getInfo, getInvoiceInfo, options, get
           </div>
 
           : <React.Fragment>
-            <Select onChange={(e) => setSelect(e.value)} placeholder='Select invoice...' className='invoice-select' options={options} />
+            <div className='select-container'>
+              {cartItems.length <=0 && <Select onChange={(e) => setSelect(e.value)} placeholder='Select invoice...' className='invoice-select' options={options} />}
+              {invoiceItems.length <= 0 && <Select onChange={(e) => setClientInvoiceInfo(e.value)} placeholder='Select client...' className='invoice-select' options={clientInfoOptions} />}
+            </div>
             <Invoice />
           </React.Fragment>
         }
@@ -101,6 +117,10 @@ CartPage.propTypes = {
   getInvoiceInfo: PropTypes.func.isRequired,
   options: PropTypes.array,
   getInvoiceItems: PropTypes.func,
+  clientInfoOptions: PropTypes.array,
+  setClientInvoice: PropTypes.func,
+  cartItems: PropTypes.array,
+  invoiceItems: PropTypes.array,
 };
 
 export const Cart = connect(mapStateToProps, mapDispatchToProps)(CartPage);
