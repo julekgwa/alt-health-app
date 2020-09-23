@@ -34,6 +34,8 @@
     "jsx-a11y/aria-role": [2, {
       "ignoreNonDOM": true
     }],
+    "space-infix-ops":"error",
+    "operator-linebreak": ["error", "after", {"overrides": { "?": "before", ":": "before"}}],
     "no-multi-spaces": "error",
     "semi": "error",
     "quotes": ["error", "single"],
@@ -101,6 +103,9 @@
         "allow": ["warn", "error", "info"]
       }
     ],
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-closing-bracket-location": ["error", "tag-aligned"],
+    "react/jsx-one-expression-per-line": ["error"],
     "react/no-unused-prop-types": [2],
     "no-restricted-imports": ["error", {"patterns": ["../*", "./*"]}],
     // "react/jsx-no-useless-fragment": "error",

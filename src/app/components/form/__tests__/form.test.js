@@ -105,7 +105,9 @@ describe('Add Task form', () => {
 
     it('should show a Loader when isLoading is true', () => {
 
-      const { queryByTestId, } = render(<Provider store={store}><CartForm show={true} isLoading={true} /></Provider>);
+      const { queryByTestId, } = render(<Provider store={store}>
+        <CartForm show={true} isLoading={true} />
+      </Provider>);
 
       expect(queryByTestId('loader')).toBeTruthy();
 
@@ -212,7 +214,9 @@ describe('Default functions', () => {
 
   it('should not crash when prop functions are not provided', () => {
 
-    const { getByTestId, getByPlaceholderText, } = render(<Provider store={store}><CartForm show={true} isLoading={false} /></Provider>);
+    const { getByTestId, getByPlaceholderText, } = render(<Provider store={store}>
+      <CartForm show={true} isLoading={false} />
+    </Provider>);
 
     const addTaskInput = getByPlaceholderText(/add task/i);
 

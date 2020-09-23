@@ -187,7 +187,7 @@ export function getLeadingZeros(str) {
 
   let zeros = 0;
 
-  for (let i= 0; i < str.length; i++) {
+  for (let i = 0; i < str.length; i++) {
 
     if (str[i] === '0') {
 
@@ -240,7 +240,7 @@ export function convertDate(inputFormat) {
   }
   const d = new Date(inputFormat);
 
-  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('-');
+  return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('-');
 
 }
 

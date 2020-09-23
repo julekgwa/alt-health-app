@@ -119,7 +119,11 @@ function InfoPage({
           <Popup show={showPopup} message={message} isError={isError} onButtonPress={()=> displayPopup(false)} />
         ) : (
           <div className='table-container'>
-            <p>{capitalize(info)} Info</p>
+            <p>
+              {capitalize(info)}
+              {' '}
+              Info
+            </p>
             <table {...getTableProps()}>
               <thead>
                 {headerGroups.map((headerGroup, m) => (
@@ -170,9 +174,13 @@ function InfoPage({
                 Next Page
               </button>
               <div>
-                Page{' '}
+                Page
+                {' '}
                 <em>
-                  {pageIndex + 1} of {pageOptions.length}
+                  {pageIndex + 1}
+                  {' '}
+                  of
+                  {pageOptions.length}
                 </em>
               </div>
             </div>

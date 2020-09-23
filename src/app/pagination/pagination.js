@@ -47,7 +47,9 @@ export function Pagination({
 
       }
 
-      pages.push(<li key={uuid()} onClick={() => paginate(next)}>{current}</li>);
+      pages.push(<li key={uuid()} onClick={() => paginate(next)}>
+        {current}
+      </li>);
 
     }
 
@@ -66,14 +68,28 @@ export function Pagination({
   return (
     <PaginationContainer>
       <ul>
-        <li onClick={() => paginate(currentPage === 1 ? 1 : currentPage - 1)}>&laquo;</li>
-        {currentPage > 1 && <li onClick={() => paginate(1)}>1</li>}
-        <li className='active'>{currentPage}</li>
+        <li onClick={() => paginate(currentPage === 1 ? 1 : currentPage - 1)}>
+          &laquo;
+        </li>
+        {currentPage > 1 && <li onClick={() => paginate(1)}>
+          1
+        </li>}
+        <li className='active'>
+          {currentPage}
+        </li>
         {createNextPages()}
-        {jumpPages(2) < (totalItems / itemsPerPage) && <li onClick={() => paginate(jumpPages(2))}>{jumpPages(2)}</li>}
-        {jumpPages(3) < (totalItems / itemsPerPage) && <li onClick={() => paginate(jumpPages(3))}>{jumpPages(3)}</li>}
-        {jumpPages(4) < (totalItems / itemsPerPage) && <li onClick={() => paginate(jumpPages(4))}>{jumpPages(4)}</li>}
-        {currentPage < lastPage && <li onClick={() => paginate(currentPage + 1)}>&raquo;</li>}
+        {jumpPages(2) < (totalItems / itemsPerPage) && <li onClick={() => paginate(jumpPages(2))}>
+          {jumpPages(2)}
+        </li>}
+        {jumpPages(3) < (totalItems / itemsPerPage) && <li onClick={() => paginate(jumpPages(3))}>
+          {jumpPages(3)}
+        </li>}
+        {jumpPages(4) < (totalItems / itemsPerPage) && <li onClick={() => paginate(jumpPages(4))}>
+          {jumpPages(4)}
+        </li>}
+        {currentPage < lastPage && <li onClick={() => paginate(currentPage + 1)}>
+          &raquo;
+        </li>}
       </ul>
     </PaginationContainer>
   );

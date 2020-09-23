@@ -38,8 +38,12 @@ export const Popup = ({ show, message, isError, onButtonPress, }) => (
               size='6x'
               icon={isError ? faFrown : faSmile}
             />
-            <p className='status'>{isError ? 'Error' : 'Success'}</p>
-            <p className='message'>{message}</p>
+            <p className='status'>
+              {isError ? 'Error' : 'Success'}
+            </p>
+            <p className='message'>
+              {message}
+            </p>
           </div>
           <div
             tabIndex='0'
@@ -48,7 +52,9 @@ export const Popup = ({ show, message, isError, onButtonPress, }) => (
             onClick={onButtonPress}
             className='button'
           >
-            <p>{isError ? 'OK!' : 'Cool beans!'}</p>
+            <p>
+              {isError ? 'OK!' : 'Cool beans!'}
+            </p>
           </div>
         </div>
       </PopupContainer>

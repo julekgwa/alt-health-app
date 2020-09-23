@@ -105,7 +105,8 @@ function AltHome({
     <Animated>
       <Container>
         <h1 className='company-title'>
-          alt health{' '}
+          alt health
+          {' '}
           <span className='tagline'>
             Better Care and Better Understanding.
           </span>

@@ -77,7 +77,11 @@ describe('Reports', () => {
       dueDate: 'fakeFake',
     }]));
 
-    render(<Provider store={store}><Router><Report isError={false} isLoading={true} getInfo={jest.fn()} data={[]} /></Router></Provider>);
+    render(<Provider store={store}>
+      <Router>
+        <Report isError={false} isLoading={true} getInfo={jest.fn()} data={[]} />
+      </Router>
+    </Provider>);
 
   });
 

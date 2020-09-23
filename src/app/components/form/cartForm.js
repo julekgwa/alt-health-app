@@ -74,19 +74,38 @@ export const CartForm = ({
 
               <React.Fragment>
                 <div className='input-container'>
-                  <label htmlFor='supplement-id'>supplement id</label>
+                  <label htmlFor='supplement-id'>
+                    supplement id
+                  </label>
                   <Select onChange={(e) => onSelectChange(e.value)} id='supplement-id' options={options}/>
-                  <label htmlFor='task'>Item price</label>
-                  <input value={supplementPrice} className={!Number(supplementPrice) && isInputEmpty ? 'task-input empty': 'task-input'} readOnly />
-                  <label htmlFor='item-price'>qty</label>
-                  <input type='number' min='0' max={stockLevels} onChange={(e) => setQty(e.target.value)} className={!Number(qty) && isInputEmpty ? 'task-input empty': 'task-input'} value={qty} />
+                  <label htmlFor='task'>
+                    Item price
+                  </label>
+                  <input value={supplementPrice} className={!Number(supplementPrice) && isInputEmpty ? 'task-input empty' : 'task-input'} readOnly />
+                  <label htmlFor='item-price'>
+                    qty
+                  </label>
+                  <input type='number' min='0' max={stockLevels} onChange={(e) => setQty(e.target.value)} className={!Number(qty) && isInputEmpty ? 'task-input empty' : 'task-input'} value={qty} />
                 </div>
 
-                {minLevels > stockLevels && <p className='min-levels'>Only {stockLevels} left</p>}
+                {minLevels > stockLevels && <p className='min-levels'>
+                  Only
+                  {stockLevels}
+                  {' '}
+                  left
+                </p>}
 
                 <div className='button'>
-                  <div data-testid='close-button' onClick={closeForm} role='button' tabIndex='0' onKeyDown={(e) => handleKeyDown(e, closeForm)}><p>{closeButtonText}</p></div>
-                  <div data-testid='add-button' role='button' tabIndex='0' onKeyDown={(e) => handleKeyDown(e, onAddToCartPress)} onClick={onAddToCartPress}><p>{okButtonText}</p></div>
+                  <div data-testid='close-button' onClick={closeForm} role='button' tabIndex='0' onKeyDown={(e) => handleKeyDown(e, closeForm)}>
+                    <p>
+                      {closeButtonText}
+                    </p>
+                  </div>
+                  <div data-testid='add-button' role='button' tabIndex='0' onKeyDown={(e) => handleKeyDown(e, onAddToCartPress)} onClick={onAddToCartPress}>
+                    <p>
+                      {okButtonText}
+                    </p>
+                  </div>
                 </div>
               </React.Fragment>
 

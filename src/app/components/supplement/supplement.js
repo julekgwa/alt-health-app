@@ -27,8 +27,15 @@ export const Supplement = ({ description, price, onClick, image, }) => {
     <ItemContainer>
       <img src={image} alt='img' />
       <div className='supplement-info'>
-        <div className='supplement-description'>{description}</div>
-        <div onKeyDown={(e) => handleKeyDown(e, onClick)} role='button' tabIndex='0' onClick={onClick} className='add-to-cart'>+<FontAwesomeIcon icon={faShoppingCart} /> {`${price}`}</div>
+        <div className='supplement-description'>
+          {description}
+        </div>
+        <div onKeyDown={(e) => handleKeyDown(e, onClick)} role='button' tabIndex='0' onClick={onClick} className='add-to-cart'>
+          +
+          <FontAwesomeIcon icon={faShoppingCart} />
+          {' '}
+          {`${price}`}
+        </div>
       </div>
     </ItemContainer>
   )

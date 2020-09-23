@@ -84,7 +84,9 @@ const Links = ({ toggleMenu, isMobile, total, }) => {
             </NavLink>
 
             <Dropdown isMobile={isMobile} className='some-div'>
-              <span className='dropdown-header'>Info</span>
+              <span className='dropdown-header'>
+                Info
+              </span>
               <NavbarDropdownContent className='inner'>
                 <NavLink exact strict to='/info/clients'>
                   Client Info
@@ -134,7 +136,9 @@ const Links = ({ toggleMenu, isMobile, total, }) => {
       )}
       <NavLink exact strict to='/cart' className='logo-link'>
         <div className='cart'>
-          <span>{total}</span>
+          <span>
+            {total}
+          </span>
           <FontAwesomeIcon color='red' icon={faShoppingCart} />
         </div>
       </NavLink>

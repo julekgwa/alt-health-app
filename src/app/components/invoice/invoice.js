@@ -53,25 +53,42 @@ const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, cl
     <React.Fragment>
       <InvoiceContainer>
         <div className='invoice-header-container'>
-          <p>invoice</p>
+          <p>
+            invoice
+          </p>
           <img src={InvoiceLogo} alt='invoice-logo' />
         </div>
         <div className='invoice-body'>
           <div className='line-items'>
             <table className='invoice-tbl'>
               <tr>
-                <th className='align-left'>Description</th>
-                <th className='align-right'>Price (excl)</th>
-                <th className='align-right content'>Qty</th>
-                <th className='align-right'>Total (excl)</th>
+                <th className='align-left'>
+                  Description
+                </th>
+                <th className='align-right'>
+                  Price (excl)
+                </th>
+                <th className='align-right content'>
+                  Qty
+                </th>
+                <th className='align-right'>
+                  Total (excl)
+                </th>
               </tr>
               {items.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.Description}</td>
-                  <td className='align-right'>R{item.Cost_excl}</td>
-                  <td className='align-right'>{item.Item_quantity}</td>
+                  <td>
+                    {item.Description}
+                  </td>
                   <td className='align-right'>
-                  R
+                    R
+                    {item.Cost_excl}
+                  </td>
+                  <td className='align-right'>
+                    {item.Item_quantity}
+                  </td>
+                  <td className='align-right'>
+                    R
                     {calculateTotalPrice(
                       item.Cost_excl,
                       item.Item_quantity
@@ -90,29 +107,46 @@ const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, cl
               <tr className='tr-subtotal'>
                 <td></td>
                 <td></td>
-                <td className='align-right'>Subtotal</td>
-                <td className='align-right'>R{subtotal}</td>
+                <td className='align-right'>
+                  Subtotal
+                </td>
+                <td className='align-right'>
+                  R
+                  {subtotal}
+                </td>
               </tr>
               <tr className='tr-subtotal'>
                 <td></td>
                 <td></td>
-                <td className='align-right'>VAT</td>
-                <td className='align-right'>R{vat}</td>
+                <td className='align-right'>
+                  VAT
+                </td>
+                <td className='align-right'>
+                  R
+                  {vat}
+                </td>
               </tr>
 
               <tr className='tr-subtotal'>
                 <td></td>
                 <td></td>
-                <td className='align-right'>Total</td>
-                <td className='align-right'>R{total}</td>
+                <td className='align-right'>
+                  Total
+                </td>
+                <td className='align-right'>
+                  R
+                  {total}
+                </td>
               </tr>
 
               <tr>
                 <td></td>
                 <td></td>
-                <td className='align-right'>Paid</td>
                 <td className='align-right'>
-                R
+                  Paid
+                </td>
+                <td className='align-right'>
+                  R
                   {items.length &&
                 typeof items[0].Inv_Paid === 'string' &&
                 items[0].Inv_Paid.toLowerCase() === 'y'
@@ -124,9 +158,11 @@ const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, cl
               <tr>
                 <td></td>
                 <td></td>
-                <td className='align-right'>Balance</td>
                 <td className='align-right'>
-                R
+                  Balance
+                </td>
+                <td className='align-right'>
+                  R
                   {items.length &&
                 typeof items[0].Inv_Paid === 'string' &&
                 items[0].Inv_Paid.toLowerCase() === 'y'
@@ -139,25 +175,35 @@ const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, cl
           <div className='divider'></div>
           <div className='bill-info'>
             <p className='invoice-info-p'>
-            Bill To{' '}
-              <span>{`${invoiceClientInfo.C_name || ''} ${invoiceClientInfo.C_surname || ''}`}</span>
-              <span>{invoiceClientInfo.Address}</span>
+              Bill To
+              {' '}
+              <span>
+                {`${invoiceClientInfo.C_name || ''} ${invoiceClientInfo.C_surname || ''}`}
+              </span>
+              <span>
+                {invoiceClientInfo.Address}
+              </span>
             </p>
 
             <p className='invoice-info-p'>
-            Invoice Number{' '}
-              <span>{cartItems.length ? nextInvoiceNumber : items && items[0] && items[0].Inv_Num}</span>
+              Invoice Number
+              {' '}
+              <span>
+                {cartItems.length ? nextInvoiceNumber : items && items[0] && items[0].Inv_Num}
+              </span>
             </p>
 
             <p className='invoice-info-p'>
-            Date{' '}
+              Date
+              {' '}
               <span>
                 {cartItems.length ? getCurrentDate() : items && items[0] && convertDate(items[0].Inv_Date)}
               </span>
             </p>
 
             <p className='invoice-info-p'>
-            Due Date{' '}
+              Due Date
+              {' '}
               <span>
                 {cartItems.length ? '00-00-0000' : items &&
                 items[0] &&
@@ -168,8 +214,12 @@ const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, cl
         </div>
       </InvoiceContainer>
       <div className='button-container'>
-        {cartItems.length ? <Button onClick={clearCart}>clear cart</Button> : ''}
-        <Button primary>Send invoice</Button>
+        {cartItems.length ? <Button onClick={clearCart}>
+          clear cart
+        </Button> : ''}
+        <Button primary>
+          Send invoice
+        </Button>
       </div>
     </React.Fragment>
   );

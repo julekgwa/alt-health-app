@@ -189,7 +189,9 @@ const CartPage = ({
                 />
               )}
 
-              <Button onClick={() => setShowForm(true)} primary>Add items to cart</Button>
+              <Button onClick={() => setShowForm(true)} primary>
+                Add items to cart
+              </Button>
             </div>
             <Invoice clearCart={clearCart} />
 

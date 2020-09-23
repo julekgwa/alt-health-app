@@ -59,7 +59,8 @@ export function MenuBar() {
       />
       <FontAwesomeIcon data-testid='close' style={{
         WebkitAppRegion: 'no-drag',
-      }} onClick={onClose} size='1x' icon={faTimes} />
+      }} onClick={onClose} size='1x' icon={faTimes}
+      />
     </MenuBarContainer>
   );
 
