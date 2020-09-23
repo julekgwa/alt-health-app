@@ -18,6 +18,10 @@ import {
 } from 'app/components/navigation/routeLinks';
 
 import {
+  MenuBar
+} from 'app/components/window-buttons/menubar';
+
+import {
   Cart
 } from 'app/pages/cart';
 
@@ -32,10 +36,6 @@ import {
 import {
   Report
 } from 'app/pages/reports';
-
-import {
-  MenuBar
-} from '../window-buttons/menubar';
 
 export const Navigation = () => {
 

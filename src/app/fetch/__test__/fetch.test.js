@@ -1,6 +1,6 @@
 import {
   fetchAPI
-} from '../fetch';
+} from 'app/fetch/fetch';
 
 const options ={
   method: 'get',

@@ -7,12 +7,12 @@ import {
 } from 'app/fetch/fetch';
 
 import {
-  cleanErrors
-} from 'app/utils';
+  setError
+} from 'app/redux/actions/index';
 
 import {
-  setError
-} from './index';
+  cleanErrors
+} from 'app/utils';
 
 const dispatcher = (dispatch, type, payload) => dispatch({
   type,

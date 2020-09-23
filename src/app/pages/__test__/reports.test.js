@@ -31,7 +31,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   Report
-} from '../reports';
+} from 'app/pages/reports';
 
 const sliderImages = [
   {

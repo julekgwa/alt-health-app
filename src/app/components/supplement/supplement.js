@@ -14,12 +14,12 @@ import React from 'react';
 import Placeholder from 'app/assets/placeholder.png';
 
 import {
-  handleKeyDown
-} from 'app/utils';
+  ItemContainer
+} from 'app/components/supplement/itemContainer';
 
 import {
-  ItemContainer
-} from './itemContainer';
+  handleKeyDown
+} from 'app/utils';
 
 export const Supplement = ({ description, price, onClick, image, }) => {
 

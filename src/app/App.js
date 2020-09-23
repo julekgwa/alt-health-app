@@ -1,22 +1,20 @@
 import React from 'react';
 
-import './App.css';
-
 import {
   Provider
 } from 'react-redux';
 
 import {
   Navigation
-} from './components/navigation/navigation';
+} from 'app/components/navigation/navigation';
 
 import {
   store
-} from './redux/store';
+} from 'app/redux/store/index';
 
 import {
   GlobalStyle
-} from './styles/globalStyle';
+} from 'app/styles/globalStyle';
 
 export function App() {
 

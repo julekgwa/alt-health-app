@@ -32,7 +32,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   Info
-} from '../info';
+} from 'app/pages/info';
 
 const mockStore = configureStore(middleware);
 

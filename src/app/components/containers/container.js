@@ -96,11 +96,13 @@ const MainContainer = styled.div`
   .invoice-select {
     width: 200px;
     margin-left: 30px;
-    margin-bottom: 10px;
   }
 
   .select-container {
     display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 10px;
   }
 
   .button-container {

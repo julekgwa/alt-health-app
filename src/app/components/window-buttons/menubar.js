@@ -12,7 +12,7 @@ import React from 'react';
 
 import {
   MenuBarContainer
-} from './menubar-container';
+} from 'app/components/window-buttons/menubar-container';
 
 export function MenuBar() {
 

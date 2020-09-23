@@ -5,7 +5,7 @@ import styled,
 
 import {
   NavbarDropdownContent
-} from './dropdownContent';
+} from 'app/components/navigation/dropdownContent';
 
 export const Dropdown = styled.div`
   position: relative;

@@ -12,11 +12,11 @@ import {
 
 import {
   Dropdown
-} from './dropdown';
+} from 'app/components/navigation/dropdown';
 
 import {
   NavbarDropdownContent
-} from './dropdownContent';
+} from 'app/components/navigation/dropdownContent';
 
 export function Mobile({ style, isMobile, key, toggleMenu, }) {
 

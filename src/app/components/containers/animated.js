@@ -13,7 +13,7 @@ import {
   useSpring
 } from 'react-spring';
 
-import classes from './animated.module.css';
+import classes from 'app/components/containers/animated.module.css';
 
 const mapStateToProps = (state) => ({
   isActive: state.isActive,

@@ -1,7 +1,9 @@
 import {
   ADD_TO_CART,
+  CLEAR_CART,
   ERROR,
   GET_DATA,
+  GET_SUPPLEMENT_INFO,
   IS_DESKTOP_MENU,
   REQUEST_METHOD,
   SET_CLIENT_INFO,
@@ -15,7 +17,7 @@ import {
 
 import {
   fetchItem
-} from './utils';
+} from 'app/redux/actions/utils';
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 const GET_CLIENTS = BASE_URL + process.env.REACT_APP_GET_CLIENTS;
@@ -68,6 +70,12 @@ export function setError(type, payload) {
 }
 
 export function getInfo(payload) {
+
+  if (payload === 'supplements') {
+
+    return getSupplementInfo();
+
+  }
 
   return dispatch => {
 
@@ -127,6 +135,35 @@ export function getInvoiceItems(invoiceNumber) {
 
     return fetchItem(dispatch, requestOptions, true, action);
 
+  };
+
+}
+
+export function getSupplementInfo() {
+
+  return dispatch => {
+
+    const requestOptions = {
+      url: GET_SUPPLEMENTS,
+      method: REQUEST_METHOD.get,
+    };
+
+    const action = {
+      type: GET_SUPPLEMENT_INFO,
+      loaderType: SET_LOADER,
+      error: ERROR,
+    };
+
+    return fetchItem(dispatch, requestOptions, true, action);
+
+  };
+
+}
+
+export function clearCart() {
+
+  return {
+    type: CLEAR_CART,
   };
 
 }

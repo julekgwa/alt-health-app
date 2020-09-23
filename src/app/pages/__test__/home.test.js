@@ -26,7 +26,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   Home
-} from '../home';
+} from 'app/pages/home';
 
 const middleware = [thunk];
 

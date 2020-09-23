@@ -22,7 +22,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   Popup
-} from '../popup';
+} from 'app/components/popup/popup';
 
 const sliderImages = [
   {

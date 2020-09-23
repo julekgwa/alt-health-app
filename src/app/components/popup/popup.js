@@ -16,12 +16,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
-  handleKeyDown
-} from 'app/utils';
+  PopupContainer
+} from 'app/components/popup/popupContainer';
 
 import {
-  PopupContainer
-} from './popupContainer';
+  handleKeyDown
+} from 'app/utils';
 
 export const Popup = ({ show, message, isError, onButtonPress, }) => (
   <React.Fragment>

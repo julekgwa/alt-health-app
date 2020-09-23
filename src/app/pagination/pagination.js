@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
-  uuid
-} from 'app/utils';
+  PaginationContainer
+} from 'app/pagination/paginationContainer';
 
 import {
-  PaginationContainer
-} from './paginationContainer';
+  uuid
+} from 'app/utils';
 
 export function Pagination({
   itemsPerPage,

@@ -9,8 +9,10 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   ADD_TO_CART,
+  CLEAR_CART,
   ERROR,
   GET_DATA,
+  GET_SUPPLEMENT_INFO,
   IS_DESKTOP_MENU,
   SET_CLIENT_INFO,
   SET_CLIENT_INVOICE_INFO,
@@ -26,7 +28,7 @@ import {
   countCartItems,
   createHeaders,
   createNextInvoiceNumber,
-  formatInvoiceOptions
+  createSelectOptionValues
 } from 'app/utils';
 
 const sliderImages = [
@@ -56,6 +58,8 @@ const initState = {
   invoiceClientInfo: {},
   nextInvoiceNumber: '',
   clientInfoOptions: [],
+  supplementInfo: [],
+  supplementOptions: [],
 };
 
 export function rootReducer(state = initState, action) {
@@ -103,6 +107,17 @@ export function rootReducer(state = initState, action) {
       tableHeadersAndAccessors: createHeaders(action.payload) || [],
     };
 
+  case GET_SUPPLEMENT_INFO:
+
+    return {
+      ...state,
+      data: action.payload || [],
+      isError: false,
+      supplementInfo: action.payload || [],
+      supplementOptions: createSelectOptionValues(action.payload, 'Supplement_id'),
+      tableHeadersAndAccessors: createHeaders(action.payload) || [],
+    };
+
   case SET_INVOICE_ITEMS:
 
     return {
@@ -114,7 +129,7 @@ export function rootReducer(state = initState, action) {
   case SET_INVOICE_INFO:
     return {
       ...state,
-      invoiceInfo: formatInvoiceOptions(action.payload),
+      invoiceInfo: createSelectOptionValues(action.payload, 'Inv_Num'),
       nextInvoiceNumber: (createNextInvoiceNumber(action.payload)),
     };
 
@@ -122,7 +137,14 @@ export function rootReducer(state = initState, action) {
     return {
       ...state,
       clientInfo: action.payload,
-      clientInfoOptions: formatInvoiceOptions(action.payload),
+      clientInfoOptions: createSelectOptionValues(action.payload, 'Client_id'),
+    };
+
+  case CLEAR_CART:
+    return {
+      ...state,
+      cart: [],
+      totalItems: 0,
     };
 
   case SET_CLIENT_INVOICE_INFO:

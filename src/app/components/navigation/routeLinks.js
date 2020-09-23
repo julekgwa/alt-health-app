@@ -25,24 +25,24 @@ import {
 } from 'react-spring';
 
 import {
-  setIsActive
-} from 'app/redux/actions';
-
-import {
   Hamburger
-} from '../hamburger/hamburger';
+} from 'app/components/hamburger/hamburger';
 
 import {
   Dropdown
-} from './dropdown';
+} from 'app/components/navigation/dropdown';
 
 import {
   NavbarDropdownContent
-} from './dropdownContent';
+} from 'app/components/navigation/dropdownContent';
 
 import {
   Mobile
-} from './mobile';
+} from 'app/components/navigation/mobile';
+
+import {
+  setIsActive
+} from 'app/redux/actions';
 
 const mapStateToProps = (state) => ({
   isMobile: state.isActive,

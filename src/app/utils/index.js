@@ -95,7 +95,7 @@ export function uuid() {
 
 }
 
-export function formatInvoiceOptions(invoiceData) {
+export function createSelectOptionValues(invoiceData, key) {
 
   if (!invoiceData) {
 
@@ -104,8 +104,8 @@ export function formatInvoiceOptions(invoiceData) {
   }
 
   return invoiceData.map(invoice => ({
-    value: invoice.Inv_Num || invoice.Client_id,
-    label: invoice.Inv_Num || invoice.Client_id,
+    value: invoice[key],
+    label: invoice[key],
   }));
 
 }
@@ -171,13 +171,13 @@ export function addItemToCart(cart, cartItem) {
 
   if (addItem) {
 
-    addItem.Item_quantity += 1;
+    addItem.Item_quantity += (cartItem.Item_quantity || 1);
 
     return cart;
 
   }
 
-  cartItem.Item_quantity = 1;
+  cartItem.Item_quantity = cartItem.Item_quantity || 1;
 
   return [...cart, cartItem];
 

@@ -9,18 +9,18 @@ import {
 import InvoiceLogo from 'app/assets/invoice.png';
 
 import {
+  Button
+} from 'app/components/button/button';
+
+import {
+  InvoiceContainer
+} from 'app/components/invoice/invoiceContainer';
+
+import {
   calculateCartTotal,
   convertDate,
   getCurrentDate
 } from 'app/utils';
-
-import {
-  Button
-} from '../button/button';
-
-import {
-  InvoiceContainer
-} from './invoiceContainer';
 
 const mapStateToProps = (state) => ({
   cartItems: state.cart,
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   nextInvoiceNumber: state.nextInvoiceNumber,
 });
 
-const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, }) => {
+const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, clearCart, }) => {
 
   if (cartItems.length <= 0 && invoiceItems.length <= 0) {
 
@@ -168,7 +168,8 @@ const Inv = ({ cartItems, invoiceItems, invoiceClientInfo, nextInvoiceNumber, })
         </div>
       </InvoiceContainer>
       <div className='button-container'>
-        <Button>Send invoice</Button>
+        {cartItems.length ? <Button onClick={clearCart}>clear cart</Button> : ''}
+        <Button primary>Send invoice</Button>
       </div>
     </React.Fragment>
   );
@@ -180,6 +181,7 @@ Inv.propTypes = {
   invoiceItems: PropTypes.array.isRequired,
   invoiceClientInfo: PropTypes.object,
   nextInvoiceNumber: PropTypes.string,
+  clearCart: PropTypes.func,
 };
 
 Inv.defaultProps = {
