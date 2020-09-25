@@ -90,6 +90,7 @@ export const CartForm = ({
 
                 {minLevels > stockLevels && <p className='min-levels'>
                   Only
+                  {' '}
                   {stockLevels}
                   {' '}
                   left

@@ -34,6 +34,10 @@ import {
 } from 'app/components/invoice/invoice';
 
 import {
+  Popup
+} from 'app/components/popup/popup';
+
+import {
   addToCart,
   clearCart,
   getInfo,
@@ -41,6 +45,7 @@ import {
   getInvoiceItems,
   getSupplementInfo,
   setClientInvoiceInfo
+  , showPopup
 } from 'app/redux/actions';
 
 import {
@@ -56,6 +61,9 @@ const mapStateToProps = (state) => ({
   invoiceItems: state.invoiceItems,
   supplementOptions: state.supplementOptions,
   supplementInfo: state.supplementInfo,
+  showPopup: state.showPopup,
+  isError: state.isError,
+  message: state.message,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -67,6 +75,7 @@ const mapDispatchToProps = (dispatch) => ({
   getSupplementInfo: () => dispatch(getSupplementInfo()),
   addToCart: (payload) => dispatch(addToCart(payload)),
   clearCart: () => dispatch(clearCart()),
+  displayPopup: (payload) => dispatch(showPopup(payload)),
 });
 
 const CartPage = ({
@@ -84,11 +93,16 @@ const CartPage = ({
   options,
   getInvoiceItems,
   clearCart,
+  showPopup,
+  isError,
+  displayPopup,
+  message,
 }) => {
 
   const [selectValue, setSelect] = useState('');
   const [currentSupplement, setCurrentSupplement] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [isClientInfoEmpty, setIsClientInfoEmpty] = useState(false);
 
   useEffect(() => {
 
@@ -106,7 +120,13 @@ const CartPage = ({
 
     getInvoiceInfo();
 
-  }, [clientInfo, getInfo, getInvoiceInfo, getSupplementInfo, supplementInfo]);
+  }, [
+    clientInfo,
+    getInfo,
+    getInvoiceInfo,
+    getSupplementInfo,
+    supplementInfo
+  ]);
 
   useEffect(() => {
 
@@ -119,6 +139,7 @@ const CartPage = ({
     const client = clientInfo.find((info) => info.Client_id === id);
 
     setClientInvoice(client);
+    setIsClientInfoEmpty(false);
 
   };
 
@@ -184,8 +205,17 @@ const CartPage = ({
                 <Select
                   onChange={(e) => setClientInvoiceInfo(e.value)}
                   placeholder='Select client...'
-                  className='invoice-select'
+                  className={isClientInfoEmpty ? 'invoice-select invoice-select-empty' : 'invoice-select'}
                   options={clientInfoOptions}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 0,
+                    colors: {
+                      ...theme.colors,
+                      primary25: 'danger',
+                      primary: 'black',
+                    },
+                  })}
                 />
               )}
 
@@ -193,7 +223,7 @@ const CartPage = ({
                 Add items to cart
               </Button>
             </div>
-            <Invoice clearCart={clearCart} />
+            <Invoice onSendInvoice={setIsClientInfoEmpty} clearCart={clearCart} />
 
             <CartForm
               stockLevels={
@@ -212,10 +242,16 @@ const CartPage = ({
               show={showForm}
               resetValues={resetSupplement}
               minLevels={
-                (currentSupplement &&
-                  currentSupplement.Min_levels) ||
+                (currentSupplement && currentSupplement.Min_levels) ||
                 0
               }
+            />
+
+            <Popup
+              show={showPopup}
+              message={message || 'Successfully sent invoice to client'}
+              isError={isError}
+              onButtonPress={() => displayPopup(false)}
             />
           </React.Fragment>
         )}
@@ -240,6 +276,10 @@ CartPage.propTypes = {
   getSupplementInfo: PropTypes.func,
   addToCart: PropTypes.func,
   clearCart: PropTypes.func,
+  displayPopup: PropTypes.func,
+  showPopup: PropTypes.bool,
+  isError: PropTypes.bool,
+  message: PropTypes.string,
 };
 
 export const Cart = connect(

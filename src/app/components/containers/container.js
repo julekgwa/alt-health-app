@@ -98,6 +98,10 @@ const MainContainer = styled.div`
     margin-left: 30px;
   }
 
+  .invoice-select-empty > div {
+    border: 2px solid red;
+  }
+
   .select-container {
     display: flex;
     align-items: center;

@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   CLEAR_CART,
+  CREATE_INVOICE,
   ERROR,
   GET_DATA,
   GET_SUPPLEMENT_INFO,
@@ -11,8 +12,8 @@ import {
   SET_INVOICE_INFO,
   SET_INVOICE_ITEMS,
   SET_LOADER,
-  SHOW_POPUP,
-  UPDATE_SLIDER_INDEX
+  SHOW_POPUP
+  , UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
 import {
@@ -31,6 +32,7 @@ const GET_PURCHASE_STATS = BASE_URL + process.env.REACT_APP_GET_PURCHASE_STATS;
 const GET_CLIENTS_WITH_INCOMPLETE_DATA = BASE_URL + process.env.REACT_APP_GET_CLIENTS_WITH_INCOMPLETE_DATA;
 const GET_INVOICES_INFO = BASE_URL + process.env.REACT_APP_GET_INVOICES_INFO;
 const GET_INVOICE_ITEMS = BASE_URL + process.env.REACT_APP_GET_INVOICE_ITEMS;
+const POST_CREATE_INVOICE = BASE_URL + process.env.REACT_APP_POST_CREATE_INVOICE;
 
 const infoUrls = {
   clients: GET_CLIENTS,
@@ -150,6 +152,28 @@ export function getSupplementInfo() {
 
     const action = {
       type: GET_SUPPLEMENT_INFO,
+      loaderType: SET_LOADER,
+      error: ERROR,
+    };
+
+    return fetchItem(dispatch, requestOptions, true, action);
+
+  };
+
+}
+
+export function createInvoice(payload) {
+
+  return dispatch => {
+
+    const requestOptions = {
+      url: POST_CREATE_INVOICE,
+      method: REQUEST_METHOD.post,
+      body: JSON.stringify(payload),
+    };
+
+    const action = {
+      type: CREATE_INVOICE,
       loaderType: SET_LOADER,
       error: ERROR,
     };

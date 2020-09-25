@@ -10,6 +10,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 import {
   ADD_TO_CART,
   CLEAR_CART,
+  CREATE_INVOICE,
   ERROR,
   GET_DATA,
   GET_SUPPLEMENT_INFO,
@@ -19,8 +20,8 @@ import {
   SET_INVOICE_INFO,
   SET_INVOICE_ITEMS,
   SET_LOADER,
-  SHOW_POPUP,
-  UPDATE_SLIDER_INDEX
+  SHOW_POPUP
+  , UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
 import {
@@ -151,6 +152,17 @@ export function rootReducer(state = initState, action) {
     return {
       ...state,
       invoiceClientInfo: action.payload || {},
+    };
+
+  case CREATE_INVOICE:
+    return {
+      ...state,
+      showPopup: true,
+      isError: false,
+      invoiceItems: [],
+      totalItems: 0,
+      cart: [],
+      supplementInfo: [],
     };
 
   case ADD_TO_CART:
