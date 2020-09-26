@@ -47,17 +47,11 @@ export const Form = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [supplierId, setSupplierId] = useState('');
   const [supplierTel, setSupplierTel] = useState('');
-  const [home, setHome] = useState('');
+  const [accountType, setAccountType] = useState('');
   const [bank, BankInput] = useInput({
     type: 'text',
     id: 'bank',
     placeholder: 'Bank Name',
-  });
-
-  const [name, NameInput] = useInput({
-    type: 'text',
-    id: 'name',
-    placeholder: 'Name',
   });
 
   const [contact, ContactInput] = useInput({
@@ -94,13 +88,12 @@ export const Form = ({
   const addNewItem = () => {
 
     const supplier = {
-      name,
       contact,
       bankNumber,
       code,
       supplierId,
       supplierTel,
-      home,
+      accountType,
       email,
       bank,
     };
@@ -108,10 +101,8 @@ export const Form = ({
     setIsSubmitting(false);
 
     if (
-      !name ||
       !contact ||
       !supplierTel ||
-      !home ||
       !supplierId ||
       !validateEmail(email)
     ) {
@@ -138,14 +129,24 @@ export const Form = ({
                   <div className='form-inputs'>
                     <div>
                       <label
-                        htmlFor='name'
+                        htmlFor='supplier'
                         className={
-                          isSubmitting && !name ? 'required' : ''
+                          isSubmitting && !supplierId
+                            ? 'task-input required'
+                            : ''
                         }
                       >
-                        name
+                        supplier id
                       </label>
-                      {NameInput}
+                      <input
+                        className='task-input'
+                        value={supplierId}
+                        onChange={(e) =>
+                          setSupplierId(e.target.value)
+                        }
+                        id='supplier'
+                        type='text'
+                      />
                     </div>
 
                     <div>
@@ -227,45 +228,22 @@ export const Form = ({
                     </div>
                     <div>
                       <label
-                        htmlFor='tel-home'
+                        htmlFor='account-type'
                         className={
-                          isSubmitting && !home ? 'required' : ''
+                          isSubmitting && !accountType ? 'required' : ''
                         }
                       >
-                        tel home
+                        Account Type
                       </label>
                       <input
-                        placeholder='(011) 858-9033'
+                        placeholder='e.g. Savings'
                         className='task-input'
-                        value={home}
+                        value={accountType}
                         onChange={(e) =>
-                          setHome(maskPhoneNumber(e.target.value))
+                          setAccountType(e.target.value)
                         }
-                        id='tel-home'
+                        id='account-type'
                         type='tel'
-                      />
-                    </div>
-                  </div>
-                  <div className='form-inputs'>
-                    <div>
-                      <label
-                        htmlFor='supplier'
-                        className={
-                          isSubmitting && !supplierId
-                            ? 'task-input required'
-                            : 'task-input'
-                        }
-                      >
-                        supplier id
-                      </label>
-                      <input
-                        className='task-input'
-                        value={supplierId}
-                        onChange={(e) =>
-                          setSupplierId(e.target.value)
-                        }
-                        id='supplier'
-                        type='text'
                       />
                     </div>
                   </div>
