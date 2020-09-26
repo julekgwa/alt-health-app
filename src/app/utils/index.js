@@ -95,7 +95,7 @@ export function uuid() {
 
 }
 
-export function createSelectOptionValues(invoiceData, key) {
+export function createSelectOptionValues(invoiceData, key, label) {
 
   if (!invoiceData) {
 
@@ -105,7 +105,7 @@ export function createSelectOptionValues(invoiceData, key) {
 
   return invoiceData.map(invoice => ({
     value: invoice[key],
-    label: invoice[key],
+    label: invoice[label] || invoice[key],
   }));
 
 }
@@ -123,7 +123,7 @@ export function calculateVAT(totalPrice) {
   const VAT = Number(process.env.REACT_APP_GET_VAT);
   const multiplier = VAT / 100 + 1;
 
-  return `R${(price * multiplier).toFixed(2)}`;
+  return `${(price * multiplier).toFixed(2)}`;
 
 }
 
@@ -257,5 +257,21 @@ export function getCurrentDate() {
     day = '0' + day;
 
   return [day, month, year].join('-');
+
+}
+
+export function validateEmail(email) {
+
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  return re.test(String(email).toLowerCase());
+
+}
+
+export function maskPhoneNumber(number) {
+
+  const x = number.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+
+  return !x[2] ? x[1] : '(' + x[1] + ') ' + '- (' + x[2] + ')' + (x[3] ? ' - (' + x[3] + ')' : '');
 
 }

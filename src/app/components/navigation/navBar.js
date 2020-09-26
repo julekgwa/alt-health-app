@@ -76,7 +76,7 @@ const Navigation = styled.nav`
   }
 
   ${(props) =>
-    props.active &&
+  props.active &&
     css`
       a {
         display: block !important;

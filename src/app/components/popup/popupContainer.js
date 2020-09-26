@@ -18,9 +18,9 @@ export const PopupContainer = styled.div`
 
   .container {
     background-color: ${props =>
-    (props && props.isError && Colors.verySoftRed) ||
+  (props && props.isError && Colors.verySoftRed) ||
       Colors.verySoftCyan};
-    width: 400px;
+    width: 600px;
     min-height: 359px;
     border-radius: 10px;
     display: flex;

@@ -8,19 +8,24 @@ import Medicine3 from 'app/assets/medicine-3.jpg';
 import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
+  ADD_NEW_CLIENT,
+  ADD_NEW_SUPPLEMENT,
+  ADD_NEW_SUPPLIER,
   ADD_TO_CART,
   CLEAR_CART,
   CREATE_INVOICE,
   ERROR,
   GET_DATA,
+  GET_REFERENCE_INFO,
   GET_SUPPLEMENT_INFO,
+  GET_SUPPLIER_INFO,
   IS_DESKTOP_MENU,
-  SET_CLIENT_INFO,
-  SET_CLIENT_INVOICE_INFO,
-  SET_INVOICE_INFO,
-  SET_INVOICE_ITEMS,
-  SET_LOADER,
-  SHOW_POPUP
+  SET_CLIENT_INFO
+  , SET_CLIENT_INVOICE_INFO
+  , SET_INVOICE_INFO
+  , SET_INVOICE_ITEMS
+  , SET_LOADER
+  , SHOW_POPUP
   , UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
@@ -60,6 +65,9 @@ const initState = {
   nextInvoiceNumber: '',
   clientInfoOptions: [],
   supplementInfo: [],
+  supplierInfo: [],
+  supplierOptions: [],
+  referenceOptions: [],
   supplementOptions: [],
 };
 
@@ -106,6 +114,44 @@ export function rootReducer(state = initState, action) {
       data: action.payload || [],
       isError: false,
       tableHeadersAndAccessors: createHeaders(action.payload) || [],
+    };
+
+  case GET_SUPPLIER_INFO:
+
+    return {
+      ...state,
+      data: action.payload || [],
+      isError: false,
+      tableHeadersAndAccessors: createHeaders(action.payload) || [],
+      supplierInfo: action.payload || [],
+      supplierOptions: createSelectOptionValues(action.payload, 'Supplier_ID'),
+    };
+
+  case GET_REFERENCE_INFO:
+    return {
+      ...state,
+      referenceOptions: createSelectOptionValues(action.payload, 'Reference_ID', 'Description'),
+    };
+
+  case ADD_NEW_CLIENT:
+    return {
+      ...state,
+      showPopup: true,
+      message: 'You\'ve successfully added a new client',
+    };
+
+  case ADD_NEW_SUPPLEMENT:
+    return {
+      ...state,
+      showPopup: true,
+      message: 'You\'ve successfully added a new supplement',
+    };
+
+  case ADD_NEW_SUPPLIER:
+    return {
+      ...state,
+      showPopup: true,
+      message: 'You\'ve successfully added a new supplier',
     };
 
   case GET_SUPPLEMENT_INFO:

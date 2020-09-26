@@ -2,8 +2,8 @@ import {
   connect
 } from 'react-redux';
 
-import styled, {
-
+import styled,
+{
   css
 } from 'styled-components';
 
@@ -11,7 +11,7 @@ import {
   Colors
 } from 'app/styles/colors';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   theme: state.theme,
 });
 
@@ -29,8 +29,17 @@ const Container = styled.div`
   label {
     text-transform: uppercase;
     margin-bottom: 3px;
-    color: ${props =>
-    props && props.theme && props.theme.headerColor};
+    font-size: 14px;
+    color: ${Colors.White};
+  }
+
+  .required {
+    color: ${Colors.red};
+  }
+
+  .required:after {
+    content: ' *';
+    color:  ${Colors.red};
   }
 
   .button {
@@ -53,13 +62,25 @@ const Container = styled.div`
     }
   }
 
+  .form-inputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: space-between;
+
+    &> div {
+      width: 45%;
+      padding-right: 5%;
+    }
+  }
+
   .min-levels {
     color: ${Colors.red};
     margin-left: 30px;
   }
 
-  ${props =>
-    props &&
+  ${(props) =>
+  props &&
     props.isSubmitting &&
     css`
       .container {
@@ -69,8 +90,8 @@ const Container = styled.div`
       }
     `}
 
-  ${props =>
-    props &&
+  ${(props) =>
+      props &&
     props.inputEmpty &&
     css`
       .empty {
@@ -83,23 +104,22 @@ const Container = styled.div`
       }
     `}
 
-  input.task-input  {
+  input.task-input {
     width: 90%;
-    background: ${props =>
-    props && props.theme && props.theme.backgroundColor};
+    background: ${(props) =>
+      props && props.theme && props.theme.backgroundColor};
     box-shadow: inset 5px 5px 10px
-        ${props =>
-    props && props.theme && props.theme.primaryShadowColor},
+        ${(props) =>
+        props && props.theme && props.theme.primaryShadowColor},
       inset -5px -5px 10px
-        ${props =>
-    props && props.theme && props.theme.secondaryShadowColor};
-    height: 35px;
+        ${(props) =>
+          props && props.theme && props.theme.secondaryShadowColor};
     border-radius: 5px;
     outline: none;
     border: none;
     caret-color: ${Colors.softOrange};
     color: ${Colors.darkGrayishBlue};
-    font-size: 24px;
+    font-size: 14px;
     padding: 12px 20px;
     font-family: 'Signika', sans-serif;
     margin-bottom: 30px;

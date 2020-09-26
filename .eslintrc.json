@@ -92,7 +92,8 @@
     ],
     "padded-blocks": ["error", "always"],
     "indent": ["error", 2, {
-      "ImportDeclaration": "first"
+      "ImportDeclaration": "first",
+      "ignoredNodes": ["TemplateLiteral"]
     }],
     "no-multiple-empty-lines": ["error", {
       "max": 1

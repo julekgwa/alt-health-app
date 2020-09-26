@@ -17,7 +17,7 @@ export const Dropdown = styled.div`
   }
 
   ${(props) =>
-    props &&
+  props &&
     props.isMobile &&
     css`
       position: static;

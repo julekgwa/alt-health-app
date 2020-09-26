@@ -33,6 +33,11 @@ const MainContainer = styled.div`
     display: flex;
   }
 
+  .info-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .fetch-error {
     display: flex;
     justify-content: center;
@@ -96,6 +101,10 @@ const MainContainer = styled.div`
   .invoice-select {
     width: 200px;
     margin-left: 30px;
+  }
+
+  .dropdown {
+    width: 100%;
   }
 
   .invoice-select-empty > div {
