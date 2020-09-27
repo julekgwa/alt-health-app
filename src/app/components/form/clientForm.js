@@ -31,6 +31,7 @@ import {
   handleKeyDown
   , maskPhoneNumber
   , validateEmail
+  , validateZARID
 } from 'app/utils';
 
 const mapDispatchToProps = dispatch => ({
@@ -112,7 +113,7 @@ const Form = ({
 
     setIsSubmitting(false);
 
-    if (!name || !surname || !clientId || !address || !code || !home || !validateEmail(email)) {
+    if (!name || !surname || !validateZARID(clientId) || !address || !code || !home || !validateEmail(email)) {
 
       setIsSubmitting(true);
 
@@ -154,7 +155,7 @@ const Form = ({
 
                   <div className='form-inputs'>
                     <div>
-                      <label htmlFor='client-id' className={isSubmitting && !clientId ? 'required' : ''}>
+                      <label htmlFor='client-id' className={isSubmitting && !validateZARID(clientId) ? 'required' : ''}>
                         client id
                       </label>
                       {ClientInput}

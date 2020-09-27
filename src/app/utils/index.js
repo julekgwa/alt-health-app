@@ -225,6 +225,22 @@ export function createNextInvoiceNumber(invoiceData) {
 
 }
 
+export function nextSupplementId(currentSupplements) {
+
+  const supplements = currentSupplements.map(supplement => ({
+    number: Number(supplement.Supplement_id.substring(11)) || 0,
+  }));
+
+  const maxSupplement = Math.max.apply(Math, supplements.map(function(o) {
+
+    return o.number;
+
+  }));
+
+  return `Supplement-${maxSupplement + 1}`;
+
+}
+
 export function convertDate(inputFormat) {
 
   if (Date.parse(inputFormat) < 0) {
@@ -272,6 +288,59 @@ export function maskPhoneNumber(number) {
 
   const x = number.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
 
-  return !x[2] ? x[1] : '(' + x[1] + ') ' + '- (' + x[2] + ')' + (x[3] ? ' - (' + x[3] + ')' : '');
+  return !x[2] ? x[1] : `(${x[1]})-(${x[2]})` + (x[3] ? '-(' + x[3] + ')' : '');
+
+}
+
+export function validateZARID(id) {
+
+  if (!id || typeof id !== 'string') {
+
+    return;
+
+  }
+
+  id = id.split('');
+
+  const validationCheck = [];
+
+  let sum = 0;
+
+  for (let i = 0; i < id.length; i++) {
+
+    // double every second digit.
+    if (i % 2 === 1) {
+
+      const multiplyNumber = Number(id[i]) * 2;
+
+      // check for double numbers
+      if (multiplyNumber && multiplyNumber.toString().length > 1) {
+
+        const [n1, n2] = multiplyNumber.toString().split('');
+        const singleDigit = Number(n1) + Number(n2);
+
+        validationCheck.push(singleDigit);
+
+        continue;
+
+      }
+
+      validationCheck.push(multiplyNumber);
+
+      continue;
+
+    }
+
+    validationCheck.push(Number(id[i]));
+
+  }
+
+  for (let i = 0; i < validationCheck.length; i++) {
+
+    sum += validationCheck[i];
+
+  }
+
+  return sum === 0 ? false : !(sum % 10);
 
 }

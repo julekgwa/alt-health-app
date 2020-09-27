@@ -35,6 +35,7 @@ import {
   createHeaders,
   createNextInvoiceNumber,
   createSelectOptionValues
+  , nextSupplementId
 } from 'app/utils';
 
 const sliderImages = [
@@ -69,6 +70,10 @@ const initState = {
   supplierOptions: [],
   referenceOptions: [],
   supplementOptions: [],
+  nextSupplementId: '',
+  supplementHeaders: [],
+  clientHeaders: [],
+  supplierHeaders: [],
 };
 
 export function rootReducer(state = initState, action) {
@@ -122,7 +127,7 @@ export function rootReducer(state = initState, action) {
       ...state,
       data: action.payload || [],
       isError: false,
-      tableHeadersAndAccessors: createHeaders(action.payload) || [],
+      supplierHeaders: createHeaders(action.payload) || [],
       supplierInfo: action.payload || [],
       supplierOptions: createSelectOptionValues(action.payload, 'Supplier_ID'),
     };
@@ -138,6 +143,11 @@ export function rootReducer(state = initState, action) {
       ...state,
       showPopup: true,
       message: 'You\'ve successfully added a new client',
+      clientInfo: action.payload,
+      clientInfoOptions: createSelectOptionValues(action.payload, 'Client_id'),
+      data: action.payload || [],
+      isError: false,
+      clientHeaders: createHeaders(action.payload) || [],
     };
 
   case ADD_NEW_SUPPLEMENT:
@@ -145,6 +155,12 @@ export function rootReducer(state = initState, action) {
       ...state,
       showPopup: true,
       message: 'You\'ve successfully added a new supplement',
+      data: action.payload || [],
+      isError: false,
+      supplementInfo: action.payload || [],
+      supplementOptions: createSelectOptionValues(action.payload, 'Supplement_id'),
+      supplementHeaders: createHeaders(action.payload) || [],
+      nextSupplementId: nextSupplementId(action.payload),
     };
 
   case ADD_NEW_SUPPLIER:
@@ -152,17 +168,21 @@ export function rootReducer(state = initState, action) {
       ...state,
       showPopup: true,
       message: 'You\'ve successfully added a new supplier',
+      data: action.payload || [],
+      isError: false,
+      supplierHeaders: createHeaders(action.payload) || [],
+      supplierInfo: action.payload || [],
+      supplierOptions: createSelectOptionValues(action.payload, 'Supplier_ID'),
     };
 
   case GET_SUPPLEMENT_INFO:
-
     return {
       ...state,
-      data: action.payload || [],
       isError: false,
       supplementInfo: action.payload || [],
       supplementOptions: createSelectOptionValues(action.payload, 'Supplement_id'),
-      tableHeadersAndAccessors: createHeaders(action.payload) || [],
+      supplementHeaders: createHeaders(action.payload) || [],
+      nextSupplementId: nextSupplementId(action.payload),
     };
 
   case SET_INVOICE_ITEMS:
@@ -185,6 +205,7 @@ export function rootReducer(state = initState, action) {
       ...state,
       clientInfo: action.payload,
       clientInfoOptions: createSelectOptionValues(action.payload, 'Client_id'),
+      clientHeaders: createHeaders(action.payload) || [],
     };
 
   case CLEAR_CART:

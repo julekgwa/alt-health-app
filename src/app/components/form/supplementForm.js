@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 
 import React, {
+  useEffect,
   useState
 } from 'react';
 
@@ -36,6 +37,10 @@ const mapDispatchToProps = dispatch => ({
   addSupplement: (payload) => dispatch(addNewSupplement(payload)),
 });
 
+const mapStateToProps = state => ({
+  nextSupplementId: state.nextSupplementId,
+});
+
 export const Form = ({
   show,
   closeButtonText,
@@ -43,6 +48,7 @@ export const Form = ({
   onCloseButton,
   options,
   addSupplement,
+  nextSupplementId,
 }) => {
 
   const [isInputEmpty, setIsInputEmpty] = useState(false);
@@ -51,7 +57,7 @@ export const Form = ({
   const [supplierId, setSupplierId] = useState('');
   const [costExcl, setCostExcl] = useState('');
 
-  const [supplementId, SupplementInput] = useInput({
+  const [supplementId, SupplementInput, setSupplementId] = useInput({
     type: 'text',
     id: 'supplement-id',
     placeholder: 'Supplement ID',
@@ -125,6 +131,12 @@ export const Form = ({
     closeForm();
 
   };
+
+  useEffect(() => {
+
+    setSupplementId(nextSupplementId);
+
+  }, [nextSupplementId, setSupplementId]);
 
   return (
     <React.Fragment>
@@ -233,6 +245,7 @@ Form.propTypes = {
   onCloseButton: PropTypes.func,
   options: PropTypes.array,
   addSupplement: PropTypes.func,
+  nextSupplementId: PropTypes.string,
 };
 
 Form.defaultProps = {
@@ -242,4 +255,4 @@ Form.defaultProps = {
   show: false,
 };
 
-export const SupplementForm = connect(null, mapDispatchToProps)(Form);
+export const SupplementForm = connect(mapStateToProps, mapDispatchToProps)(Form);

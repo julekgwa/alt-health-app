@@ -5,7 +5,7 @@ import React, {
 // use props to override default properties
 export const useInput = props => {
 
-  const [value, setValue] = useState(props && props.value || '');
+  const [value, setValue] = useState((props && props.value) || '');
 
   props && delete props.value;
 

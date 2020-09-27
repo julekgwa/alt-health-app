@@ -73,7 +73,6 @@ import {
 
 const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
-  data: state.data,
   isError: state.isError,
   message: state.message,
   tableHeadersAndAccessors: state.tableHeadersAndAccessors,
@@ -81,6 +80,11 @@ const mapStateToProps = (state) => ({
   supplierOptions: state.supplierOptions,
   supplierInfo: state.supplierInfo,
   referenceOptions: state.referenceOptions,
+  clientInfo: state.clientInfo,
+  supplementInfo: state.supplementInfo,
+  supplementHeaders: state.supplementHeaders,
+  clientHeaders: state.clientHeaders,
+  supplierHeaders: state.supplierHeaders,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -92,8 +96,6 @@ const mapDispatchToProps = (dispatch) => ({
 function InfoPage({
   isLoading,
   getInfo,
-  tableHeadersAndAccessors,
-  data,
   isError,
   message,
   showPopup,
@@ -102,6 +104,11 @@ function InfoPage({
   supplierInfo,
   referenceOptions,
   getReferenceInfo,
+  clientInfo,
+  supplementInfo,
+  supplementHeaders,
+  clientHeaders,
+  supplierHeaders,
   pageSize = 10,
 }) {
 
@@ -110,6 +117,8 @@ function InfoPage({
   const [showSupplierForm, setShowSupplierForm] = useState(false);
   const [showSupplementForm, setShowSupplementForm] = useState(false);
 
+  const data = info === 'clients' ? clientInfo : info === 'supplements' ? supplementInfo : supplierInfo;
+  const headers = info === 'clients' ? clientHeaders : info === 'supplements' ? supplementHeaders : supplierHeaders;
   const buttons = [<Button onClick={() => setShowClientForm(true)} key='1' primary>
     <FontAwesomeIcon icon={faPlus} />
   </Button>, <Button onClick={() => setShowSupplierForm(true)} key='2' primary>
@@ -132,7 +141,7 @@ function InfoPage({
     pageOptions,
   } = useTable(
     {
-      columns: tableHeadersAndAccessors,
+      columns: headers,
       data,
       initialState: {
         pageSize: pageSize,
@@ -276,6 +285,11 @@ InfoPage.propTypes = {
   supplierInfo: PropTypes.array,
   referenceOptions: PropTypes.array,
   getReferenceInfo: PropTypes.func,
+  clientInfo: PropTypes.array,
+  supplementInfo: PropTypes.array,
+  supplementHeaders: PropTypes.array,
+  clientHeaders: PropTypes.array,
+  supplierHeaders: PropTypes.array,
 };
 
 export const Info = connect(
