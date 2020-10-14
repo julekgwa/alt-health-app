@@ -14,13 +14,15 @@ import {
   ADD_TO_CART,
   CLEAR_CART,
   CREATE_INVOICE,
+  DECREASE_CART_QTY,
   ERROR,
   GET_DATA,
   GET_REFERENCE_INFO,
   GET_SUPPLEMENT_INFO,
   GET_SUPPLIER_INFO,
-  IS_DESKTOP_MENU,
-  SET_CLIENT_INFO
+  IS_DESKTOP_MENU
+  , REMOVE_FROM_CART
+  , SET_CLIENT_INFO
   , SET_CLIENT_INVOICE_INFO
   , SET_INVOICE_INFO
   , SET_INVOICE_ITEMS
@@ -36,6 +38,8 @@ import {
   createNextInvoiceNumber,
   createSelectOptionValues
   , nextSupplementId
+  , removeFromCart,
+  removeItem
 } from 'app/utils';
 
 const sliderImages = [
@@ -240,6 +244,26 @@ export function rootReducer(state = initState, action) {
       ...state,
       cart: cart,
       totalItems: countCartItems(cart),
+    };
+
+  case DECREASE_CART_QTY:
+    // eslint-disable-next-line no-case-declarations
+    const cartRemove = removeItem(state.cart, action.payload);
+
+    return {
+      ...state,
+      cart: cartRemove,
+      totalItems: countCartItems(cartRemove),
+    };
+
+  case REMOVE_FROM_CART:
+    // eslint-disable-next-line no-case-declarations
+    const items = removeFromCart(state.cart, action.payload);
+
+    return {
+      ...state,
+      cart: items,
+      totalItems: countCartItems(items),
     };
 
   default:

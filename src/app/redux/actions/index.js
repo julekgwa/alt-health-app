@@ -5,20 +5,22 @@ import {
   ADD_TO_CART,
   CLEAR_CART,
   CREATE_INVOICE,
+  DECREASE_CART_QTY,
   ERROR,
   GET_DATA,
   GET_REFERENCE_INFO,
   GET_SUPPLEMENT_INFO,
   GET_SUPPLIER_INFO,
   IS_DESKTOP_MENU,
+  REMOVE_FROM_CART,
   REQUEST_METHOD,
   SET_CLIENT_INFO,
   SET_CLIENT_INVOICE_INFO,
   SET_INVOICE_INFO,
   SET_INVOICE_ITEMS,
-  SET_LOADER,
-  SHOW_POPUP,
-  UPDATE_SLIDER_INDEX
+  SET_LOADER
+  , SHOW_POPUP
+  , UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
 import {
@@ -343,6 +345,24 @@ export function addToCart(payload) {
 
   return {
     type: ADD_TO_CART,
+    payload,
+  };
+
+}
+
+export function updateCartQty(payload) {
+
+  return {
+    type: DECREASE_CART_QTY,
+    payload,
+  };
+
+}
+
+export function removeFromCart(payload) {
+
+  return {
+    type: REMOVE_FROM_CART,
     payload,
   };
 

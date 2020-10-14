@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     font-family: 'Signika', sans-serif;
     background-color: ${Colors.veryDarkGrayishViolet};
-    overflow: scroll;
+    overflow: hidden;
   }
 `;
 

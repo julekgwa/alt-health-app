@@ -1,3 +1,13 @@
+import {
+  faMinus,
+  faPlus,
+  faTrash
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
 import PropTypes from 'prop-types';
 
 import React from 'react';
@@ -17,7 +27,10 @@ import {
 } from 'app/components/invoice/invoiceContainer';
 
 import {
-  createInvoice
+  addToCart,
+  createInvoice,
+  removeFromCart,
+  updateCartQty
 } from 'app/redux/actions/index';
 
 import {
@@ -35,6 +48,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => ({
   sendClientInvoice: (payload) => dispatch(createInvoice(payload)),
+  addToCart: (payload) => dispatch(addToCart(payload)),
+  removeItem: (payload) => dispatch(updateCartQty(payload)),
+  removeFromCart: (payload) => dispatch(removeFromCart(payload)),
 });
 
 const Inv = ({
@@ -45,6 +61,9 @@ const Inv = ({
   clearCart,
   onSendInvoice,
   sendClientInvoice,
+  addToCart,
+  removeItem,
+  removeFromCart,
 }) => {
 
   if (cartItems.length <= 0 && invoiceItems.length <= 0) {
@@ -123,6 +142,9 @@ const Inv = ({
             <table className='invoice-tbl'>
               <tr>
                 <th className='align-left'>
+
+                </th>
+                <th className='align-left'>
                   Description
                 </th>
                 <th className='align-right'>
@@ -138,6 +160,9 @@ const Inv = ({
               {items.map((item, index) => (
                 <tr key={index}>
                   <td>
+                    <FontAwesomeIcon onClick={() => removeFromCart(item)} icon={faTrash} />
+                  </td>
+                  <td>
                     {item.Description}
                   </td>
                   <td className='align-right'>
@@ -145,7 +170,11 @@ const Inv = ({
                     {item.Cost_excl}
                   </td>
                   <td className='align-right'>
-                    {item.Item_quantity}
+                    <div className='qty-container'>
+                      <FontAwesomeIcon onClick={() => removeItem(item)} icon={faMinus} />
+                      {item.Item_quantity}
+                      <FontAwesomeIcon onClick={() => addToCart(item)} icon={faPlus} />
+                    </div>
                   </td>
                   <td className='align-right'>
                     R
@@ -308,6 +337,9 @@ Inv.propTypes = {
   clearCart: PropTypes.func,
   onSendInvoice: PropTypes.func,
   sendClientInvoice: PropTypes.func,
+  addToCart: PropTypes.func,
+  removeItem: PropTypes.func,
+  removeFromCart: PropTypes.func,
 };
 
 Inv.defaultProps = {

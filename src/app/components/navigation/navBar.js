@@ -1,3 +1,5 @@
+import platform from 'electron-platform';
+
 import {
   connect
 } from 'react-redux';
@@ -157,8 +159,8 @@ const Navigation = styled.nav`
     }
   }
 
-  @media (max-width: 900px) {
-    a:not(.icon):not(.logo-link) {
+  ${!platform.isPureWeb && css `
+  a:not(.icon):not(.logo-link) {
       display: none;
     }
 
@@ -170,7 +172,8 @@ const Navigation = styled.nav`
       float: right;
       display: block;
     }
-  }
+  `}
+
 `;
 
 export const NavBar = connect(mapStateToProps)(Navigation);

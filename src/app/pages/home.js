@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
   sliderIndex: state.sliderIndex,
   sliderImages: state.sliderImages,
   isActive: state.isActive,
-  data: state.data,
+  data: state.supplementInfo,
   isLoading: state.isLoading,
   isError: state.isError,
   message: state.message,

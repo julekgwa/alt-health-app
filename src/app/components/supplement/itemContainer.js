@@ -17,7 +17,7 @@ export const ItemContainer = styled.div`
   }
 
   img {
-    width: 100%;
+    width: 200px;
   }
 
   svg {

@@ -64,6 +64,15 @@ export const InvoiceContainer = styled.div`
     }
   }
 
+  td svg {
+    width: 15px;
+  }
+
+  .qty-container {
+    display: flex;
+    justify-content: center;
+  }
+
   .divider {
     width: 2px;
     background-color: #ddd;

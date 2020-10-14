@@ -171,15 +171,49 @@ export function addItemToCart(cart, cartItem) {
 
   if (addItem) {
 
-    addItem.Item_quantity += (cartItem.Item_quantity || 1);
+    addItem.Item_quantity += 1;
 
-    return cart;
+    return [...cart];
 
   }
 
   cartItem.Item_quantity = cartItem.Item_quantity || 1;
 
   return [...cart, cartItem];
+
+}
+
+export function removeItem(cart, cartItem) {
+
+  const addItem = cart.find(
+    (item) => item.Supplement_id === cartItem.Supplement_id
+  );
+
+  if (cartItem.Item_quantity === 1) {
+
+    return [...cart];
+
+  }
+
+  if (addItem) {
+
+    addItem.Item_quantity -= 1;
+
+    return [...cart];
+
+  }
+
+  cartItem.Item_quantity = cartItem.Item_quantity || 1;
+
+  return [...cart, cartItem];
+
+}
+
+export function removeFromCart(cart, cartItem) {
+
+  return cart.filter(
+    (item) => item.Supplement_id !== cartItem.Supplement_id
+  );
 
 }
 
