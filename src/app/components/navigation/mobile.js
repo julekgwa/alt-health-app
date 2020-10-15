@@ -12,11 +12,11 @@ import {
 
 import {
   Dropdown
-} from './dropdown';
+} from 'app/components/navigation/dropdown';
 
 import {
   NavbarDropdownContent
-} from './dropdownContent';
+} from 'app/components/navigation/dropdownContent';
 
 export function Mobile({ style, isMobile, key, toggleMenu, }) {
 
@@ -28,52 +28,54 @@ export function Mobile({ style, isMobile, key, toggleMenu, }) {
       style={style}
     >
       <NavLink onClick={toggleMenu} exact strict to='/'>
-                Home
+        Home
       </NavLink>
 
       <Dropdown isMobile={isMobile} className='some-div'>
-        <span className='dropdown-header'>Info</span>
+        <span className='dropdown-header'>
+          Info
+        </span>
         <NavbarDropdownContent className='inner'>
           <NavLink onClick={toggleMenu} exact strict to='/info/clients'>
-                    Client Info
+            Client Info
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/info/suppliers'>
-                    Supplier Info
+            Supplier Info
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/info/supplements'>
-                    Supplement Info
+            Supplement Info
           </NavLink>
         </NavbarDropdownContent>
       </Dropdown>
       <Dropdown isMobile={isMobile}>
         <span className='dropdown-header'>
-                  Day-to-day report
+          Day-to-day report
         </span>
         <NavbarDropdownContent className='inner'>
           <NavLink onClick={toggleMenu} exact strict to='/report/unpaid-invoices'>
-                    Unpaid Invoices
+            Unpaid Invoices
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/report/birthdays'>
-                    Birthdays for today (current date)
+            Birthdays for today (current date)
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/report/stock-levels'>
-                    Minimum stock levels
+            Minimum stock levels
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/report/top-clients'>
-                    MIS report - Top 10 clients for 2018 and 2019
+            MIS report - Top 10 clients for 2018 and 2019
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/report/purchase-stats'>
-                    Purchases statistics (2012 - current)
+            Purchases statistics (2012 - current)
           </NavLink>
 
           <NavLink onClick={toggleMenu} exact strict to='/report/incomplete-client-info'>
-                    Client Information Query
+            Client Information Query
           </NavLink>
         </NavbarDropdownContent>
       </Dropdown>

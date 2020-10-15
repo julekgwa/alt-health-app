@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import {
   rootReducer
-} from '../reducers';
+} from 'app/redux/reducers/index';
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 

@@ -1,14 +1,18 @@
 import {
+  SET_CLIENT_INFO
+} from 'app/constants';
+
+import {
   fetchAPI
 } from 'app/fetch/fetch';
 
 import {
-  cleanErrors
-} from 'app/utils';
+  setError
+} from 'app/redux/actions/index';
 
 import {
-  setError
-} from './index';
+  cleanErrors
+} from 'app/utils';
 
 const dispatcher = (dispatch, type, payload) => dispatch({
   type,
@@ -25,6 +29,12 @@ export const fetchItem = (dispatch, requestOptions, isLoading, action) => {
       dispatcher(dispatch, action.loaderType, !isLoading);
 
       dispatcher(dispatch, action.type, res.result);
+
+      if (requestOptions.isClientInfo) {
+
+        dispatcher(dispatch, SET_CLIENT_INFO, res.result);
+
+      }
 
       dispatcher(dispatch, action.success || 'default', true);
 

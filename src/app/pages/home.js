@@ -1,18 +1,15 @@
 import PropTypes from 'prop-types';
 
-import React,
-{
-  useEffect
+import React, {
+  useEffect,
+  useState
 } from 'react';
+
+import Loader from 'react-loader-spinner';
 
 import {
   connect
 } from 'react-redux';
-
-import {
-  animated,
-  useTransition
-} from 'react-spring';
 
 import {
   Animated
@@ -23,86 +20,133 @@ import {
 } from 'app/components/containers/container';
 
 import {
-  Slider
-} from 'app/components/slider/slider';
+  Popup
+} from 'app/components/popup/popup';
 
 import {
+  Supplement
+} from 'app/components/supplement/supplement';
+
+import {
+  Pagination
+} from 'app/pagination/pagination';
+
+import {
+  addToCart,
+  getInfo,
+  showPopup,
   updateSliderIndex
 } from 'app/redux/actions';
+
+import {
+  Colors
+} from 'app/styles/colors';
 
 const mapStateToProps = (state) => ({
   sliderIndex: state.sliderIndex,
   sliderImages: state.sliderImages,
   isActive: state.isActive,
+  data: state.supplementInfo,
+  isLoading: state.isLoading,
+  isError: state.isError,
+  message: state.message,
+  showPopup: state.showPopup,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateSliderIndex: () => dispatch(updateSliderIndex()),
+  getSupplements: (payload) => dispatch(getInfo(payload)),
+  displayPopup: (payload) => dispatch(showPopup(payload)),
+  addToCart: (payload) => dispatch(addToCart(payload)),
 });
 
-function AltHome({ sliderIndex, sliderImages, updateSliderIndex, isActive, }) {
+function AltHome({
+  data,
+  getSupplements,
+  isLoading,
+  isError,
+  message,
+  displayPopup,
+  showPopup,
+  addToCart,
+}) {
 
-  const transitions = useTransition(sliderIndex, null, {
-    native: true,
-    reset: true,
-    unique: true,
-    from: {
-      opacity: 0,
-      transform: 'translate3d(100%, 0 ,0)',
-    },
-    enter: {
-      opacity: 1,
-      transform: 'translate3d(0%, 0, 0)',
-    },
-    leave: {
-      opacity: 0,
-      transform: 'translate3d(-50%, 0, 0)',
-    },
-  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [supplementsPerPage] = useState(6);
 
   useEffect(() => {
 
-    const interval = setInterval(() => {
+    getSupplements('supplements');
 
-      if (!isActive) {
+  }, [getSupplements]);
 
-        updateSliderIndex();
+  const formatItemPrice = (price) => {
 
-      }
+    if(!price) {
 
-    }, 3000);
+      return '---';
 
-    return () => clearInterval(interval);
+    }
+    const itemPrice = parseFloat(price).toFixed(2);
 
-  }, [updateSliderIndex, isActive]);
+    return `R${itemPrice}`;
+
+  };
+
+  const indexOfTheLastSupplement = currentPage * supplementsPerPage;
+  const indexOfFirstSupplement =
+    indexOfTheLastSupplement - supplementsPerPage;
+  const currentSupplements = data.slice(
+    indexOfFirstSupplement,
+    indexOfTheLastSupplement
+  );
 
   return (
     <Animated>
       <Container>
         <h1 className='company-title'>
-          alt health{' '}
+          alt health
+          {' '}
           <span className='tagline'>
             Better Care and Better Understanding.
           </span>
         </h1>
-        {transitions.map(({ item, props, key, }) => (
-          <animated.div style={{
-            willChange: 'transform, opacity',
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            ...props,
-          }} key={key}>
-            <Slider>
-              <div>
-                <img src={sliderImages[item].slider1} alt='logo1' />
-              </div>
-              <div>
-                <img src={sliderImages[item].slider2} alt='logo2' />
-              </div>
-            </Slider>
-          </animated.div>
-        ))}
+        {isLoading ? (
+          <div data-testid='loader' className='loader'>
+            <Loader
+              type='Bars'
+              color={Colors.White}
+              height={100}
+              width={100}
+            />
+          </div>
+        ) : isError ? (
+          <Popup
+            show={showPopup}
+            message={message}
+            isError={isError}
+            onButtonPress={() => displayPopup(false)}
+          />
+        ) : (
+          <div>
+            <div className='supplement-shop'>
+              {currentSupplements.map((supplement, index) => (
+                <Supplement
+                  key={index}
+                  description={supplement.Description}
+                  price={formatItemPrice(supplement.Cost_excl)}
+                  onClick={() => addToCart(supplement)}
+                />
+              ))}
+            </div>
+            <Pagination
+              itemsPerPage={supplementsPerPage}
+              totalItems={data.length}
+              currentPage={currentPage}
+              paginate={setCurrentPage}
+            />
+          </div>
+        )}
       </Container>
     </Animated>
   );
@@ -110,10 +154,14 @@ function AltHome({ sliderIndex, sliderImages, updateSliderIndex, isActive, }) {
 }
 
 AltHome.propTypes = {
-  sliderIndex: PropTypes.number,
-  sliderImages: PropTypes.array,
-  updateSliderIndex: PropTypes.func,
-  isActive: PropTypes.bool,
+  data: PropTypes.array,
+  getSupplements: PropTypes.func,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  message: PropTypes.string,
+  displayPopup: PropTypes.func,
+  showPopup: PropTypes.bool,
+  addToCart: PropTypes.func,
 };
 
 export const Home = connect(

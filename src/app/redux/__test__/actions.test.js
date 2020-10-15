@@ -2,9 +2,20 @@ import configureStore from 'redux-mock-store';
 
 import thunk from 'redux-thunk';
 
-const { IS_DESKTOP_MENU, UPDATE_SLIDER_INDEX, ERROR, SHOW_POPUP, } = require('app/constants');
+import {
+  ERROR,
+  IS_DESKTOP_MENU,
+  SHOW_POPUP,
+  UPDATE_SLIDER_INDEX
+} from 'app/constants';
 
-const { setIsActive, updateSliderIndex, setError, showPopup, getInfo, } = require('../actions');
+import {
+  getInfo ,
+  setError,
+  setIsActive,
+  showPopup,
+  updateSliderIndex
+} from 'app/redux/actions/index';
 
 const middleware = [thunk];
 

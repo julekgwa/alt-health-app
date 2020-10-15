@@ -15,41 +15,46 @@ const MainContainer = styled.div`
   width: 100%;
   z-index: 1;
 
-    .company-title {
+  .company-title {
+    color: ${Colors.White};
+    text-transform: uppercase;
+    margin-left: 60px;
+  }
+
+  .tagline {
+    display: block;
+    font-size: 14px;
+    color: ${Colors.darkGrayishBlue};
+  }
+
+  .loader {
+    justify-content: center;
+    align-content: center;
+    display: flex;
+  }
+
+  .info-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .fetch-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: ${Colors.White};
+    min-height: 200px;
+  }
+
+  .table-container {
+    padding: 10px;
+
+    p {
       color: ${Colors.White};
-      text-transform: uppercase;
-      margin-left: 60px;
     }
+  }
 
-    .tagline {
-      display: block;
-      font-size: 14px;
-      color: ${Colors.darkGrayishBlue}
-    }
-
-    .loader {
-      justify-content: center;
-      align-content: center;
-      display: flex;
-    }
-
-    .fetch-error {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: ${Colors.White};
-      min-height: 200px;
-    }
-
-    .table-container {
-      padding: 10px;
-
-      p {
-        color: ${Colors.White};
-      }
-    }
-
-    table {
+  table:not(.invoice-tbl) {
     border-spacing: 0;
     border: 1px solid black;
     font-size: 70%;
@@ -76,6 +81,49 @@ const MainContainer = styled.div`
       }
     }
   }
+
+  .supplement-shop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .supplement-shop > div {
+    flex-grow: 1;
+    width: 30%;
+    border: 2px solid ${Colors.veryDarkGrayishBlue};
+  }
+
+  /* select style */
+
+  .invoice-select {
+    width: 200px;
+    margin-left: 30px;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .invoice-select-empty > div {
+    border: 2px solid red;
+  }
+
+  .select-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+  }
+
 `;
 
 export const Container = connect(mapStateToProps)(MainContainer);

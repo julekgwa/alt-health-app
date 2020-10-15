@@ -1,3 +1,5 @@
+import platform from 'electron-platform';
+
 import {
   connect
 } from 'react-redux';
@@ -76,7 +78,7 @@ const Navigation = styled.nav`
   }
 
   ${(props) =>
-    props.active &&
+  props.active &&
     css`
       a {
         display: block !important;
@@ -121,6 +123,27 @@ const Navigation = styled.nav`
 
     `}
 
+    .cart {
+      position: relative;
+      margin-right: 30px;
+      margin-top: 10px;
+
+      span {
+        position: absolute;
+        top: -12px;
+        right: -22px;
+        background-color: ${Colors.White};
+        color: ${Colors.veryDarkGrayishBlue};
+        border-radius: 50%;
+        padding: 1px;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+      }
+    }
+
   @media screen and (max-width: 480px) {
     a:not(.icon) {
       display: none;
@@ -136,8 +159,8 @@ const Navigation = styled.nav`
     }
   }
 
-  @media (max-width: 900px) {
-    a:not(.icon):not(.logo-link) {
+  ${!platform.isPureWeb && css `
+  a:not(.icon):not(.logo-link) {
       display: none;
     }
 
@@ -149,7 +172,8 @@ const Navigation = styled.nav`
       float: right;
       display: block;
     }
-  }
+  `}
+
 `;
 
 export const NavBar = connect(mapStateToProps)(Navigation);

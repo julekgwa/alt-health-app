@@ -26,7 +26,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   Home
-} from '../home';
+} from 'app/pages/home';
 
 const middleware = [thunk];
 
@@ -59,7 +59,11 @@ describe('Home', () => {
 
   it('should render without crashing', () => {
 
-    render(<Provider store={store}><Router><Home /></Router></Provider>);
+    render(<Provider store={store}>
+      <Router>
+        <Home />
+      </Router>
+    </Provider>);
 
   });
 

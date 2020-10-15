@@ -8,7 +8,7 @@ import React from 'react';
 
 import {
   MenuBar
-} from '../menubar';
+} from 'app/components/window-buttons/menubar';
 
 describe('MenuBar', () => {
 

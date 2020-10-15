@@ -1,4 +1,6 @@
 
+import platform from 'electron-platform';
+
 import React from 'react';
 
 import {
@@ -16,6 +18,18 @@ import {
 } from 'app/components/navigation/routeLinks';
 
 import {
+  MenuBar
+} from 'app/components/window-buttons/menubar';
+
+import {
+  Backups
+} from 'app/pages/backup';
+
+import {
+  Cart
+} from 'app/pages/cart';
+
+import {
   Home
 } from 'app/pages/home';
 
@@ -27,15 +41,11 @@ import {
   Report
 } from 'app/pages/reports';
 
-import {
-  MenuBar
-} from '../window-buttons/menubar';
-
 export const Navigation = () => {
 
   return (
     <React.Fragment>
-      <MenuBar />
+      {!platform.isPureWeb ? <MenuBar /> : ''}
       <BrowserRouter>
         <NavBar>
           <RoutesLinks />
@@ -44,6 +54,8 @@ export const Navigation = () => {
           <Route exact path='/' component={Home} />
           <Route exact path='/info/:info' component={Info} />
           <Route exact path='/report/:report' component={Report} />
+          <Route exact path='/cart' component={Cart} />
+          <Route exact path='/backups' component={Backups} />
         </Switch>
       </BrowserRouter>
     </React.Fragment>

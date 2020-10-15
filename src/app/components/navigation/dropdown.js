@@ -5,7 +5,7 @@ import styled,
 
 import {
   NavbarDropdownContent
-} from './dropdownContent';
+} from 'app/components/navigation/dropdownContent';
 
 export const Dropdown = styled.div`
   position: relative;
@@ -17,7 +17,7 @@ export const Dropdown = styled.div`
   }
 
   ${(props) =>
-    props &&
+  props &&
     props.isMobile &&
     css`
       position: static;

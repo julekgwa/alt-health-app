@@ -49,7 +49,7 @@ export const HamContainer = styled.div`
   }
 
   ${(props) =>
-    props &&
+  props &&
     props.isOpen &&
     css`
       .open {

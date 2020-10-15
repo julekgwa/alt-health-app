@@ -31,7 +31,7 @@ import Medicine4 from 'app/assets/medicine-4.jpg';
 
 import {
   Report
-} from '../reports';
+} from 'app/pages/reports';
 
 const sliderImages = [
   {
@@ -77,7 +77,11 @@ describe('Reports', () => {
       dueDate: 'fakeFake',
     }]));
 
-    render(<Provider store={store}><Router><Report isError={false} isLoading={true} getInfo={jest.fn()} data={[]} /></Router></Provider>);
+    render(<Provider store={store}>
+      <Router>
+        <Report isError={false} isLoading={true} getInfo={jest.fn()} data={[]} />
+      </Router>
+    </Provider>);
 
   });
 

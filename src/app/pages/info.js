@@ -1,8 +1,17 @@
+import {
+  faPlus
+} from '@fortawesome/free-solid-svg-icons';
+
+import {
+  FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+
 import PropTypes from 'prop-types';
 
 import React,
 {
-  useEffect
+  useEffect,
+  useState
 } from 'react';
 
 import Loader from 'react-loader-spinner';
@@ -21,6 +30,10 @@ import {
 } from 'react-table';
 
 import {
+  Button
+} from 'app/components/button/button';
+
+import {
   Animated
 } from 'app/components/containers/animated';
 
@@ -29,12 +42,25 @@ import {
 } from 'app/components/containers/container';
 
 import {
+  ClientForm
+} from 'app/components/form/clientForm';
+
+import {
+  SupplementForm
+} from 'app/components/form/supplementForm';
+
+import {
+  SupplierForm
+} from 'app/components/form/supplierForm';
+
+import {
   Popup
 } from 'app/components/popup/popup';
 
 import {
   getInfo,
-  showPopup
+  getReference
+  , showPopup
 } from 'app/redux/actions';
 
 import {
@@ -47,31 +73,59 @@ import {
 
 const mapStateToProps = (state) => ({
   isLoading: state.isLoading,
-  data: state.data,
   isError: state.isError,
   message: state.message,
   tableHeadersAndAccessors: state.tableHeadersAndAccessors,
   showPopup: state.showPopup,
+  supplierOptions: state.supplierOptions,
+  supplierInfo: state.supplierInfo,
+  referenceOptions: state.referenceOptions,
+  clientInfo: state.clientInfo,
+  supplementInfo: state.supplementInfo,
+  supplementHeaders: state.supplementHeaders,
+  clientHeaders: state.clientHeaders,
+  supplierHeaders: state.supplierHeaders,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getInfo: (payload) => dispatch(getInfo(payload)),
   displayPopup: (payload) => dispatch(showPopup(payload)),
+  getReferenceInfo: () => dispatch(getReference()),
 });
 
 function InfoPage({
   isLoading,
   getInfo,
-  tableHeadersAndAccessors,
-  data,
   isError,
   message,
   showPopup,
   displayPopup,
+  supplierOptions,
+  supplierInfo,
+  referenceOptions,
+  getReferenceInfo,
+  clientInfo,
+  supplementInfo,
+  supplementHeaders,
+  clientHeaders,
+  supplierHeaders,
   pageSize = 10,
 }) {
 
   const { info, } = useParams();
+  const [showClientForm, setShowClientForm] = useState(false);
+  const [showSupplierForm, setShowSupplierForm] = useState(false);
+  const [showSupplementForm, setShowSupplementForm] = useState(false);
+
+  const data = info === 'clients' ? clientInfo : info === 'supplements' ? supplementInfo : supplierInfo;
+  const headers = info === 'clients' ? clientHeaders : info === 'supplements' ? supplementHeaders : supplierHeaders;
+  const buttons = [<Button onClick={() => setShowClientForm(true)} key='1' primary>
+    <FontAwesomeIcon icon={faPlus} />
+  </Button>, <Button onClick={() => setShowSupplierForm(true)} key='2' primary>
+    <FontAwesomeIcon icon={faPlus} />
+  </Button>, <Button onClick={() => setShowSupplementForm(true)} key='3' primary>
+    <FontAwesomeIcon icon={faPlus} />
+  </Button>];
 
   const {
     getTableProps,
@@ -87,7 +141,7 @@ function InfoPage({
     pageOptions,
   } = useTable(
     {
-      columns: tableHeadersAndAccessors,
+      columns: headers,
       data,
       initialState: {
         pageSize: pageSize,
@@ -101,7 +155,25 @@ function InfoPage({
 
     getInfo(info);
 
-  }, [info, getInfo]);
+  }, [info, getInfo, getReferenceInfo]);
+
+  useEffect(() => {
+
+    if (supplierInfo.length <= 0 && info !== 'suppliers') {
+
+      getInfo('suppliers');
+
+    }
+
+    if (referenceOptions.length <= 0) {
+
+      getReferenceInfo();
+
+    }
+
+  });
+
+  const buttonIndex = info === 'clients' ? 0 : info === 'suppliers' ? 1 : 2;
 
   return (
     <Animated>
@@ -115,68 +187,83 @@ function InfoPage({
               width={100}
             />
           </div>
-        ) : isError ? (
-          <Popup show={showPopup} message={message} isError={isError} onButtonPress={()=> displayPopup(false)} />
-        ) : (
-          <div className='table-container'>
-            <p>{capitalize(info)} Info</p>
-            <table {...getTableProps()}>
-              <thead>
-                {headerGroups.map((headerGroup, m) => (
-                  <tr key={m} {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((column, j) => (
-                      <th key={j} {...column.getHeaderProps()}>
-                        {column.render('Header')}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-
-                  prepareRow(row);
-
-                  return (
-                    <tr key={i} {...row.getRowProps()}>
-                      {row.cells.map((cell, k) => {
-
-                        return (
-                          <td key={k} {...cell.getCellProps()}>
-                            {cell.render('Cell')}
-                          </td>
-                        );
-
-                      })}
+        ) : data && (
+          <React.Fragment>
+            <div className='table-container'>
+              <div className='info-header'>
+                <p>
+                  {capitalize(info)}
+                  {' '}
+                  Info
+                </p>
+                {buttons[buttonIndex]}
+              </div>
+              <table {...getTableProps()}>
+                <thead>
+                  {headerGroups.map((headerGroup, m) => (
+                    <tr key={m} {...headerGroup.getHeaderGroupProps()}>
+                      {headerGroup.headers.map((column, j) => (
+                        <th key={j} {...column.getHeaderProps()}>
+                          {column.render('Header')}
+                        </th>
+                      ))}
                     </tr>
-                  );
+                  ))}
+                </thead>
+                <tbody {...getTableBodyProps()}>
+                  {page.map((row, i) => {
 
-                })}
-              </tbody>
-            </table>
-            <div>
-              <button
-                data-testid='prev'
-                onClick={() => previousPage()}
-                disabled={!canPreviousPage}
-              >
-                Previous Page
-              </button>
-              <button
-                data-testid='next'
-                onClick={() => nextPage()}
-                disabled={!canNextPage}
-              >
-                Next Page
-              </button>
+                    prepareRow(row);
+
+                    return (
+                      <tr key={i} {...row.getRowProps()}>
+                        {row.cells.map((cell, k) => {
+
+                          return (
+                            <td key={k} {...cell.getCellProps()}>
+                              {cell.render('Cell')}
+                            </td>
+                          );
+
+                        })}
+                      </tr>
+                    );
+
+                  })}
+                </tbody>
+              </table>
               <div>
-                Page{' '}
-                <em>
-                  {pageIndex + 1} of {pageOptions.length}
-                </em>
+                <button
+                  data-testid='prev'
+                  onClick={() => previousPage()}
+                  disabled={!canPreviousPage}
+                >
+                  Previous Page
+                </button>
+                <button
+                  data-testid='next'
+                  onClick={() => nextPage()}
+                  disabled={!canNextPage}
+                >
+                  Next Page
+                </button>
+                <div>
+                  Page
+                  {' '}
+                  <em>
+                    {pageIndex + 1}
+                    {' '}
+                    of
+                    {pageOptions.length}
+                  </em>
+                </div>
               </div>
             </div>
-          </div>
+            <Popup show={showPopup} message={message} isError={isError} onButtonPress={()=> displayPopup(false)} />
+            <ClientForm options={referenceOptions} onCloseButton={() => setShowClientForm(false)} show={showClientForm} />
+            <SupplierForm show={showSupplierForm} onCloseButton={() => setShowSupplierForm(false)} />
+            <SupplementForm options={supplierOptions} show={showSupplementForm} onCloseButton={() => setShowSupplementForm(false)} />
+          </React.Fragment>
         )}
       </Container>
     </Animated>
@@ -194,6 +281,15 @@ InfoPage.propTypes = {
   showPopup: PropTypes.bool,
   displayPopup: PropTypes.func,
   pageSize: PropTypes.number,
+  supplierOptions: PropTypes.array,
+  supplierInfo: PropTypes.array,
+  referenceOptions: PropTypes.array,
+  getReferenceInfo: PropTypes.func,
+  clientInfo: PropTypes.array,
+  supplementInfo: PropTypes.array,
+  supplementHeaders: PropTypes.array,
+  clientHeaders: PropTypes.array,
+  supplierHeaders: PropTypes.array,
 };
 
 export const Info = connect(

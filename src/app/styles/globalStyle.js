@@ -5,7 +5,7 @@ import {
 
 import {
   Colors
-} from './colors';
+} from 'app/styles/colors';
 
 const GlobalStyles = createGlobalStyle`
   body {

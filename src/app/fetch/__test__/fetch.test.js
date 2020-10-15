@@ -1,8 +1,8 @@
 import {
   fetchAPI
-} from '../fetch';
+} from 'app/fetch/fetch';
 
-const options ={
+const options = {
   method: 'get',
   url: '/v1/todo/tasks',
 };

@@ -7,7 +7,7 @@ import React from 'react';
 
 import {
   Hamburger
-} from '../hamburger';
+} from 'app/components/hamburger/hamburger';
 
 describe('Hamburger', () => {
 

@@ -12,7 +12,7 @@ import React from 'react';
 
 import {
   MenuBarContainer
-} from './menubar-container';
+} from 'app/components/window-buttons/menubar-container';
 
 export function MenuBar() {
 
@@ -59,7 +59,8 @@ export function MenuBar() {
       />
       <FontAwesomeIcon data-testid='close' style={{
         WebkitAppRegion: 'no-drag',
-      }} onClick={onClose} size='1x' icon={faTimes} />
+      }} onClick={onClose} size='1x' icon={faTimes}
+      />
     </MenuBarContainer>
   );
 

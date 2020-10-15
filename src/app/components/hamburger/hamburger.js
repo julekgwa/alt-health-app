@@ -4,7 +4,7 @@ import React from 'react';
 
 import {
   HamContainer
-} from './container';
+} from 'app/components/hamburger/container';
 
 export function Hamburger({ onClick, isOpen, }) {
 
