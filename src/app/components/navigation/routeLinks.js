@@ -131,6 +131,10 @@ const Links = ({ toggleMenu, isMobile, total, }) => {
                 </NavLink>
               </NavbarDropdownContent>
             </Dropdown>
+
+            <NavLink exact strict to='/backups'>
+              backups
+            </NavLink>
           </div>
         ) : ''
       )}

@@ -7,6 +7,7 @@ import {
   CREATE_INVOICE,
   DECREASE_CART_QTY,
   ERROR,
+  GET_BACKUPS,
   GET_DATA,
   GET_REFERENCE_INFO,
   GET_SUPPLEMENT_INFO,
@@ -14,11 +15,12 @@ import {
   IS_DESKTOP_MENU,
   REMOVE_FROM_CART,
   REQUEST_METHOD,
+  RESTORE_DB,
   SET_CLIENT_INFO,
   SET_CLIENT_INVOICE_INFO,
-  SET_INVOICE_INFO,
-  SET_INVOICE_ITEMS,
-  SET_LOADER
+  SET_INVOICE_INFO
+  , SET_INVOICE_ITEMS
+  , SET_LOADER
   , SHOW_POPUP
   , UPDATE_SLIDER_INDEX
 } from 'app/constants';
@@ -50,6 +52,8 @@ const GET_INVOICE_ITEMS =
 const POST_CREATE_INVOICE =
   BASE_URL + process.env.REACT_APP_POST_CREATE_INVOICE;
 const GET_REFERENCE = BASE_URL + process.env.REACT_APP_GET_REFERENCE;
+const GET_BACKUPS_URL = BASE_URL + process.env.REACT_APP_GET_BACKUPS;
+const POST_RESTORE = BASE_URL + process.env.REACT_APP_POST_RESTORE;
 
 const infoUrls = {
   clients: GET_CLIENTS,
@@ -373,6 +377,49 @@ export function setClientInvoiceInfo(payload) {
   return {
     type: SET_CLIENT_INVOICE_INFO,
     payload,
+  };
+
+}
+
+export function getBackups() {
+
+  return (dispatch) => {
+
+    const requestOptions = {
+      url: GET_BACKUPS_URL,
+      method: REQUEST_METHOD.get,
+    };
+
+    const action = {
+      type: GET_BACKUPS,
+      loaderType: SET_LOADER,
+      error: ERROR,
+    };
+
+    return fetchItem(dispatch, requestOptions, false, action);
+
+  };
+
+}
+
+export function restoreDB(payload) {
+
+  return (dispatch) => {
+
+    const requestOptions = {
+      url: POST_RESTORE,
+      method: REQUEST_METHOD.post,
+      body: JSON.stringify(payload),
+    };
+
+    const action = {
+      type: RESTORE_DB,
+      loaderType: SET_LOADER,
+      error: ERROR,
+    };
+
+    return fetchItem(dispatch, requestOptions, true, action);
+
   };
 
 }

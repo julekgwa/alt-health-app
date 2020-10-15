@@ -1,4 +1,3 @@
-
 import Medicine1 from 'app/assets/medicine-1.jpg';
 
 import Medicine2 from 'app/assets/medicine-2.jpg';
@@ -16,18 +15,20 @@ import {
   CREATE_INVOICE,
   DECREASE_CART_QTY,
   ERROR,
+  GET_BACKUPS,
   GET_DATA,
   GET_REFERENCE_INFO,
   GET_SUPPLEMENT_INFO,
   GET_SUPPLIER_INFO,
-  IS_DESKTOP_MENU
-  , REMOVE_FROM_CART
-  , SET_CLIENT_INFO
-  , SET_CLIENT_INVOICE_INFO
-  , SET_INVOICE_INFO
-  , SET_INVOICE_ITEMS
-  , SET_LOADER
-  , SHOW_POPUP
+  IS_DESKTOP_MENU,
+  REMOVE_FROM_CART,
+  RESTORE_DB,
+  SET_CLIENT_INFO,
+  SET_CLIENT_INVOICE_INFO,
+  SET_INVOICE_INFO,
+  SET_INVOICE_ITEMS,
+  SET_LOADER,
+  SHOW_POPUP
   , UPDATE_SLIDER_INDEX
 } from 'app/constants';
 
@@ -36,9 +37,9 @@ import {
   countCartItems,
   createHeaders,
   createNextInvoiceNumber,
-  createSelectOptionValues
-  , nextSupplementId
-  , removeFromCart,
+  createSelectOptionValues,
+  nextSupplementId,
+  removeFromCart,
   removeItem
 } from 'app/utils';
 
@@ -78,6 +79,7 @@ const initState = {
   supplementHeaders: [],
   clientHeaders: [],
   supplierHeaders: [],
+  backups: [],
 };
 
 export function rootReducer(state = initState, action) {
@@ -93,7 +95,10 @@ export function rootReducer(state = initState, action) {
   case UPDATE_SLIDER_INDEX:
     return {
       ...state,
-      sliderIndex: state.sliderIndex === state.sliderImages.length - 1 ? 0 : ++state.sliderIndex,
+      sliderIndex:
+          state.sliderIndex === state.sliderImages.length - 1
+            ? 0
+            : ++state.sliderIndex,
     };
 
   case SET_LOADER:
@@ -117,7 +122,6 @@ export function rootReducer(state = initState, action) {
     };
 
   case GET_DATA:
-
     return {
       ...state,
       data: action.payload || [],
@@ -126,20 +130,26 @@ export function rootReducer(state = initState, action) {
     };
 
   case GET_SUPPLIER_INFO:
-
     return {
       ...state,
       data: action.payload || [],
       isError: false,
       supplierHeaders: createHeaders(action.payload) || [],
       supplierInfo: action.payload || [],
-      supplierOptions: createSelectOptionValues(action.payload, 'Supplier_ID'),
+      supplierOptions: createSelectOptionValues(
+        action.payload,
+        'Supplier_ID'
+      ),
     };
 
   case GET_REFERENCE_INFO:
     return {
       ...state,
-      referenceOptions: createSelectOptionValues(action.payload, 'Reference_ID', 'Description'),
+      referenceOptions: createSelectOptionValues(
+        action.payload,
+        'Reference_ID',
+        'Description'
+      ),
     };
 
   case ADD_NEW_CLIENT:
@@ -148,7 +158,10 @@ export function rootReducer(state = initState, action) {
       showPopup: true,
       message: 'You\'ve successfully added a new client',
       clientInfo: action.payload,
-      clientInfoOptions: createSelectOptionValues(action.payload, 'Client_id'),
+      clientInfoOptions: createSelectOptionValues(
+        action.payload,
+        'Client_id'
+      ),
       data: action.payload || [],
       isError: false,
       clientHeaders: createHeaders(action.payload) || [],
@@ -162,7 +175,10 @@ export function rootReducer(state = initState, action) {
       data: action.payload || [],
       isError: false,
       supplementInfo: action.payload || [],
-      supplementOptions: createSelectOptionValues(action.payload, 'Supplement_id'),
+      supplementOptions: createSelectOptionValues(
+        action.payload,
+        'Supplement_id'
+      ),
       supplementHeaders: createHeaders(action.payload) || [],
       nextSupplementId: nextSupplementId(action.payload),
     };
@@ -176,7 +192,10 @@ export function rootReducer(state = initState, action) {
       isError: false,
       supplierHeaders: createHeaders(action.payload) || [],
       supplierInfo: action.payload || [],
-      supplierOptions: createSelectOptionValues(action.payload, 'Supplier_ID'),
+      supplierOptions: createSelectOptionValues(
+        action.payload,
+        'Supplier_ID'
+      ),
     };
 
   case GET_SUPPLEMENT_INFO:
@@ -184,31 +203,44 @@ export function rootReducer(state = initState, action) {
       ...state,
       isError: false,
       supplementInfo: action.payload || [],
-      supplementOptions: createSelectOptionValues(action.payload, 'Supplement_id'),
+      supplementOptions: createSelectOptionValues(
+        action.payload,
+        'Supplement_id'
+      ),
       supplementHeaders: createHeaders(action.payload) || [],
       nextSupplementId: nextSupplementId(action.payload),
     };
 
   case SET_INVOICE_ITEMS:
-
     return {
       ...state,
-      invoiceClientInfo: state.clientInfo.find(item => action.payload[0] && item.Client_id === action.payload[0].Client_id) || {},
+      invoiceClientInfo:
+          state.clientInfo.find(
+            (item) =>
+              action.payload[0] &&
+              item.Client_id === action.payload[0].Client_id
+          ) || {},
       invoiceItems: action.payload,
     };
 
   case SET_INVOICE_INFO:
     return {
       ...state,
-      invoiceInfo: createSelectOptionValues(action.payload, 'Inv_Num'),
-      nextInvoiceNumber: (createNextInvoiceNumber(action.payload)),
+      invoiceInfo: createSelectOptionValues(
+        action.payload,
+        'Inv_Num'
+      ),
+      nextInvoiceNumber: createNextInvoiceNumber(action.payload),
     };
 
   case SET_CLIENT_INFO:
     return {
       ...state,
       clientInfo: action.payload,
-      clientInfoOptions: createSelectOptionValues(action.payload, 'Client_id'),
+      clientInfoOptions: createSelectOptionValues(
+        action.payload,
+        'Client_id'
+      ),
       clientHeaders: createHeaders(action.payload) || [],
     };
 
@@ -264,6 +296,24 @@ export function rootReducer(state = initState, action) {
       ...state,
       cart: items,
       totalItems: countCartItems(items),
+    };
+
+  case GET_BACKUPS:
+    return {
+      ...state,
+      backups: createSelectOptionValues(
+        action.payload,
+        'commit',
+        'date'
+      ),
+    };
+
+  case RESTORE_DB:
+    return {
+      ...state,
+      showPopup: true,
+      message: 'You\'ve successfully restored database',
+      isError: false,
     };
 
   default:

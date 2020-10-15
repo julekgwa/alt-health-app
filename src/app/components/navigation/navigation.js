@@ -22,6 +22,10 @@ import {
 } from 'app/components/window-buttons/menubar';
 
 import {
+  Backups
+} from 'app/pages/backup';
+
+import {
   Cart
 } from 'app/pages/cart';
 
@@ -51,6 +55,7 @@ export const Navigation = () => {
           <Route exact path='/info/:info' component={Info} />
           <Route exact path='/report/:report' component={Report} />
           <Route exact path='/cart' component={Cart} />
+          <Route exact path='/backups' component={Backups} />
         </Switch>
       </BrowserRouter>
     </React.Fragment>

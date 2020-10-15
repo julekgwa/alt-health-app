@@ -19,6 +19,8 @@ export const ADD_NEW_SUPPLEMENT = 'ADD_NEW_SUPPLEMENT';
 export const GET_REFERENCE_INFO = 'GET_REFERENCE_INFO';
 export const DECREASE_CART_QTY = 'DECREASE_CART_QTY';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const GET_BACKUPS = 'GET_BACKUPS';
+export const RESTORE_DB = 'RESTORE_DB';
 
 export const REQUEST_METHOD = {
   get: 'GET',

@@ -97,6 +97,7 @@ const Inv = ({
     const invoice = {
       clientName: `${invoiceClientInfo.C_name || ''} ${invoiceClientInfo.C_surname || ''}`,
       address: invoiceClientInfo.Address,
+      clientEmail: invoiceClientInfo.C_Email,
       clientId: invoiceClientInfo.Client_id,
       invoiceNumber: cartItems.length ? nextInvoiceNumber : items && items[0] && items[0].Inv_Num,
       dueDate: cartItems.length
